@@ -1,6 +1,7 @@
 package org.mj.Database;
 
 import java.sql.*;
+import org.mj.Models.*;
 
 public class DataBaseOperation {
     /**
@@ -38,5 +39,22 @@ public class DataBaseOperation {
         }
         //TODO: zrobic zeby zwracalo User i jesli fail logowanie to null
         return 0;
+    }
+
+    /**
+     * rejestracja do aplikacji
+     * @param user
+     * @param connection
+     * @return true - udana rejestracja false - nieudana rejestracja
+     * @throws SQLException
+     */
+    public static boolean Registry(User user, Connection connection) throws SQLException {
+        String query = "INSERT INTO user (`login`, `password`, `name`, `lastname`) VALUES ('" + user.Login + "', '" + user.Password + "', '" + user.Name + "', '" + user.Lastname + "');";
+
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.executeUpdate(query);
+
+        //TODO: dodac false jesli sie nie powiedzie i jesli dany login juz istnieje w bazie
+        return true;
     }
 }

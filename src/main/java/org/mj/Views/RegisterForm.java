@@ -1,4 +1,4 @@
-package org.mj;
+package org.mj.Views;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,48 +7,51 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.mj.Models.*;
 import org.mj.Database.*;
 
-public class LoginForm extends JFrame{
-    private JPanel MainPanel;
+public class RegisterForm extends JFrame{
+    private JTextField NameField;
+    private JTextField LastnameField;
     private JTextField LoginField;
     private JPasswordField PasswordField;
-    private JButton LoginButton;
-    private JButton RegisterButton;
+    private JButton RegistryButton;
+    private JPanel MainPanel;
 
-    public  LoginForm(JFrame parent){
-        setTitle("Login");
+    public RegisterForm(JFrame parent){
+        setTitle("Registry");
         setContentPane(MainPanel);
         setMinimumSize(new Dimension(450, 300));
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-        LoginButton.addActionListener(new ActionListener() {
+        RegistryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String login = LoginField.getText();
-                String password = String.valueOf(PasswordField.getPassword());
+                User user = new User();
+
+                user.Login = LoginField.getText();
+                user.Password = String.valueOf(PasswordField.getPassword());
+                user.Name = NameField.getText();
+                user.Lastname = LastnameField.getText();
+
                 String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
 
                 Connection conn = DataBaseOperation.ConnectToDB(connectionUrl);
                 //TODO: sprobowac przeniesc try catcha do DataBaseOperation
                 try {
-                    int idTemp = DataBaseOperation.Login(login, password, conn);
-                    System.out.println(idTemp);
+                    DataBaseOperation.Registry(user, conn);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-            }
-        });
-        RegisterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
+                JOptionPane.showMessageDialog(null, "Account created");
+                LoginForm loginForm = new LoginForm(null);
+                dispose();
             }
         });
     }
-
     public static void main(String[] args){
-        LoginForm loginForm = new LoginForm(null);
+        RegisterForm registerForm = new RegisterForm(null);
     }
 }
