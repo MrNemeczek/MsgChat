@@ -6,8 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import org.mj.Database.*;
+import org.mj.Models.Friend;
+import org.mj.Models.User;
 
 public class LoginForm extends JFrame{
     private JPanel MainPanel;
@@ -33,8 +36,19 @@ public class LoginForm extends JFrame{
                 Connection conn = DataBaseOperation.ConnectToDB(connectionUrl);
                 //TODO: sprobowac przeniesc try catcha do DataBaseOperation
                 try {
-                    int idTemp = DataBaseOperation.Login(login, password, conn);
-                    System.out.println(idTemp);
+                    User user = DataBaseOperation.Login(login, password, conn);
+
+                    //logowanie sie powiodlo
+                    if(user != null){
+                        LinkedList<Friend> friends = DataBaseOperation.GetFriends(user, conn);
+
+                        MessagesForm msgForm = new MessagesForm(null, friends, user);
+                        dispose();
+                    }
+                    else{
+                        //TODO: komunikat ze bledne haslo lub login
+                    }
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
