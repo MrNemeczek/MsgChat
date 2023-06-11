@@ -34,7 +34,7 @@ public class MessagesForm extends JFrame{
         AddFriendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                SearchUserForm searchUserForm = new SearchUserForm(null);
             }
         });
     }

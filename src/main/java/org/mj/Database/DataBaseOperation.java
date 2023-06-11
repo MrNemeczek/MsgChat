@@ -2,7 +2,6 @@ package org.mj.Database;
 
 import java.sql.*;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.mj.Models.*;
 
@@ -70,8 +69,8 @@ public class DataBaseOperation {
     }
 
     public static LinkedList<Friend> GetFriends(User user, Connection connection) throws SQLException {
-        String query = "SELECT f.*, u.name, u.lastname FROM chatdb.friend as f \n" +
-                "INNER JOIN chatdb.user as u ON f.id_user_friend=u.id_user\n" +
+        String query = "SELECT f.*, u.name, u.lastname FROM friend as f \n" +
+                "INNER JOIN user as u ON f.id_user_friend=u.id_user\n" +
                 "WHERE f.id_user=" + user.ID_User + " AND f.accepted=1;";
 
         LinkedList<Friend> friends = new LinkedList<Friend>();
@@ -93,5 +92,26 @@ public class DataBaseOperation {
         }
 
         return friends;
+    }
+    public static LinkedList<User> FindUser(User user, Connection connection) throws Exception{
+        String query = "SELECT id_user, name, lastname FROM user WHERE name LIKE '%" + user.Name + "%' OR lastname LIKE '%" + user.Lastname + "%';";
+
+        LinkedList<User> users = new LinkedList<>();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        
+        while(rs.next()){
+            
+            User userfound = new User();
+            
+            userfound.Name = rs.getString("name");
+            userfound.Lastname = rs.getString("lastname");
+            userfound.ID_User = rs.getInt("id_user");
+            users.add(userfound);
+            System.out.println(userfound.ID_User);
+            
+        }
+        return users;
+
     }
 }
