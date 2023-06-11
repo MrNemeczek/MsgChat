@@ -86,6 +86,8 @@ public class DataBaseOperation {
             friend.ID_User = rs.getInt("id_user");
             friend.ID_User_Friend = rs.getInt("id_user_friend");
             friend.Accepted = rs.getInt("accepted");
+            friend.User_Friend.Name =  rs.getString("name");
+            friend.User_Friend.Lastname =  rs.getString("lastname");
 
             friends.add(friend);
         }

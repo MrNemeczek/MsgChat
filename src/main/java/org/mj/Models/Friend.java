@@ -6,4 +6,6 @@ public class Friend {
     public int ID_User_Friend;
     //0 - nieakceptowane, 1 - akceptowane
     public int Accepted;
+
+    public User User_Friend = new User();
 }

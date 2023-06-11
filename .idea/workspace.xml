@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="Registry added">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Models/Friend.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="MessagesForm added and DB logic">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/LoginForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Models/Friend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Models/Friend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,13 +128,21 @@
       <option name="project" value="LOCAL" />
       <updated>1686173875612</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="MessagesForm added and DB logic">
+      <created>1686503719970</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1686503719970</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Login logic addded and basic DataBaseOperation added" />
     <MESSAGE value="Registry added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Registry added" />
+    <MESSAGE value="MessagesForm added and DB logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="MessagesForm added and DB logic" />
   </component>
 </project>

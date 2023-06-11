@@ -9,11 +9,12 @@ import org.mj.Models.*;
 
 public class MessagesForm extends JFrame{
     private JButton AddFriendButton;
-    private JTextField textField1;
+    private JTextField MessageField;
     private JPanel MainPanel;
     private JButton SendButton;
-    private JScrollPane FriendsScrollPanel;
     private JScrollPane MessagesPanel;
+    private JPanel FriendsPanel;
+    private JScrollPane FriendsScrollPanel;
 
     public  MessagesForm(JFrame parent, LinkedList<Friend> friends, User currentUser) {
         setTitle("Login");
@@ -24,12 +25,10 @@ public class MessagesForm extends JFrame{
         setVisible(true);
 
         for(var friend : friends){
-            JButton friendButton = new JButton(String.valueOf(friend.ID_Friend));
-            //friendButton.setSize(new Dimension(50,50));
-            JPanel view = (JPanel) FriendsScrollPanel.getViewport().getView();
-            view.add(new JLabel("test"), null);
-            //FriendsScrollPanel.add(friendButton);
-            repaint();
+            JButton friendButton = new JButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
+            friendButton.setSize(new Dimension(50,50));
+
+            FriendsPanel.add(friendButton);
         }
 
         AddFriendButton.addActionListener(new ActionListener() {
@@ -42,5 +41,10 @@ public class MessagesForm extends JFrame{
 
     public static void main(String[] args){
         //MessagesForm loginForm = new MessagesForm(null);
+    }
+
+    private void createUIComponents() {
+        FriendsPanel = new JPanel();
+        FriendsPanel.setLayout(new BoxLayout(FriendsPanel, BoxLayout.Y_AXIS));
     }
 }
