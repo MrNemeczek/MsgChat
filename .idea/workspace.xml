@@ -4,12 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="MessagesForm added and DB logic">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="Dodano SearchUser to AddFriend">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
+    </list>
+    <list id="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" name="Changes by jerem" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +31,40 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java">
+      <ranges>
+        <range start1="6" end1="6" start2="6" end2="8" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="7" end1="7" start2="9" end2="11" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="17" end1="17" start2="21" end2="23" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="18" end1="20" start2="24" end2="26" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="26" end1="32" start2="32" end2="34" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="36" end1="37" start2="38" end2="39" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="41" end1="43" start2="43" end2="75" changelist="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" />
+        <range start1="48" end1="48" start2="80" end2="82" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java">
+      <ranges>
+        <range start1="10" end1="10" start2="10" end2="11" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="18" end1="19" start2="19" end2="20" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="30" end1="30" start2="31" end2="33" changelist="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" />
+        <range start1="32" end1="32" start2="35" end2="37" changelist="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" />
+        <range start1="35" end1="36" start2="40" end2="40" changelist="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" />
+        <range start1="39" end1="42" start2="43" end2="46" changelist="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" />
+        <range start1="45" end1="46" start2="49" end2="67" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="56" end1="58" start2="77" end2="79" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java">
+      <ranges>
+        <range start1="70" end1="70" start2="70" end2="77" changelist="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" />
+        <range start1="71" end1="73" start2="78" end2="80" changelist="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" />
+        <range start1="95" end1="95" start2="102" end2="110" changelist="81eaf605-c5ad-40b5-9a7c-9b3fb6eadf12" />
+        <range start1="116" end1="116" start2="131" end2="174" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+      </ranges>
+    </file>
   </component>
   <component name="ProjectId" id="2QtDrBMQL8aNYr2xy3qNYdSfD0q" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -109,9 +149,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.LoginForm" />
+        <item itemvalue="Application.MessagesForm" />
         <item itemvalue="Application.SearchUserForm" />
         <item itemvalue="Application.RegisterForm" />
-        <item itemvalue="Application.MessagesForm" />
       </list>
     </recent_temporary>
   </component>
@@ -152,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686503719970</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Dodano SearchUser to AddFriend">
+      <created>1686518934015</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1686518934015</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -160,6 +207,7 @@
     <MESSAGE value="Login logic addded and basic DataBaseOperation added" />
     <MESSAGE value="Registry added" />
     <MESSAGE value="MessagesForm added and DB logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="MessagesForm added and DB logic" />
+    <MESSAGE value="Dodano SearchUser to AddFriend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodano SearchUser to AddFriend" />
   </component>
 </project>

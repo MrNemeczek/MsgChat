@@ -114,4 +114,47 @@ public class DataBaseOperation {
         return users;
 
     }
+
+    public static boolean FriendRequest (User user, User frienduser, Connection connection) throws SQLException {
+        String query = "INSERT INTO friend (`id_user`, `id_user_friend`) VALUES ( " + user.ID_User + ", " + frienduser.ID_User + ")";
+
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.executeUpdate(query);
+
+        return true;
+    }
+
+    public static LinkedList<Friend> CheckFriendRequests (User user, Connection connection) throws SQLException {
+        LinkedList<Friend> friendsRequested = new LinkedList<>();
+
+        String query = "SELECT f.id_friend, f.id_user, f.id_user_friend, u.name, u.lastname FROM friend f\n" +
+                "INNER JOIN user u ON f.id_user=u.id_user \n" +
+                "WHERE f.id_user_friend=" + user.ID_User + " AND f.accepted=0;";
+
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()){
+            Friend friend = new Friend();
+
+            friend.ID_Friend = rs.getInt("id_friend");
+            friend.ID_User = rs.getInt("id_user");
+            friend.ID_User_Friend = rs.getInt("id_user_friend");
+            friend.User_Friend.Name =  rs.getString("name");
+            friend.User_Friend.Lastname =  rs.getString("lastname");
+
+            friendsRequested.add(friend);
+        }
+
+        return friendsRequested;
+    }
+
+    public static boolean AcceptFriendRequest(Friend friend, Connection connection) throws SQLException{
+        String query = "UPDATE friend SET `accepted` = '1' WHERE (`id_friend`=" + friend.ID_Friend + ");";
+
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.executeUpdate(query);
+
+        return true;
+    }
 }

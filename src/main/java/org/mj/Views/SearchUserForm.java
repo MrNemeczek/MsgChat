@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class SearchUserForm extends JFrame implements ActionListener{
@@ -16,7 +17,7 @@ public class SearchUserForm extends JFrame implements ActionListener{
     private JPanel UsersPanel;
     private JButton SearchButton;
 
-    public SearchUserForm(JFrame parent){
+    public SearchUserForm(JFrame parent, User currentuser){
         setTitle("Search");
         setContentPane(MainPanel);
         setMinimumSize(new Dimension(450, 300));
@@ -43,7 +44,24 @@ public class SearchUserForm extends JFrame implements ActionListener{
                        FoundButton.setSize(new Dimension(50,50));
 
                        UsersPanel.add(FoundButton);
+
+                       FoundButton.addActionListener(new ActionListener() {
+                           @Override
+                           public void actionPerformed(ActionEvent e) {
+                               int response = JOptionPane.showConfirmDialog(null, "Are you sure?");
+
+                               if(response == JOptionPane.YES_OPTION){
+                                   try {
+                                       DataBaseOperation.FriendRequest( currentuser,foundUser, conn );
+                                   } catch (SQLException ex) {
+                                       throw new RuntimeException(ex);
+                                   }
+                               }
+                           }
+                       });
+
                    }
+
                    setVisible(true);
                } catch (Exception ex) {
                    throw new RuntimeException(ex);
@@ -54,8 +72,8 @@ public class SearchUserForm extends JFrame implements ActionListener{
        });
 
 }
-    public static void main(String[] args) { SearchUserForm searchUserForm = new SearchUserForm(null);
-    }
+//    public static void main(String[] args) { SearchUserForm searchUserForm = new SearchUserForm(null,);
+//    }
 
     private void createUIComponents() {
          UsersPanel = new JPanel(new GridBagLayout());
