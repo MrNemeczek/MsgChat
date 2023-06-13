@@ -67,8 +67,6 @@ public class SearchUserForm extends JFrame implements ActionListener{
                    throw new RuntimeException(ex);
                }
            }
-
-
        });
 
 }

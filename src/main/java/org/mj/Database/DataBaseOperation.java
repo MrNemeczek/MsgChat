@@ -68,12 +68,25 @@ public class DataBaseOperation {
         return true;
     }
 
+    /**
+     * wyszukuje z DB jakich mamy znajomych
+     * @param user uzytkownik dla ktorego szukamy friendow
+     * @param connection
+     * @return LinkedList<Friend> firendy z user
+     * @throws SQLException
+     */
     public static LinkedList<Friend> GetFriends(User user, Connection connection) throws SQLException {
-        String query = "SELECT f.*, u.name, u.lastname FROM friend as f \n" +
-                "INNER JOIN user as u ON f.id_user_friend=u.id_user\n" +
-                "WHERE f.id_user=" + user.ID_User + " AND f.accepted=1;";
+        String query = "SELECT f.*, " +
+                "CASE WHEN f.id_user=" + user.ID_User + " THEN u_friend.name ELSE u.name END as name, " +
+                "CASE WHEN f.id_user=" + user.ID_User + " THEN u_friend.lastname ELSE u.lastname END as lastname " +
+                "FROM friend f " +
+                "INNER JOIN user u ON u.id_user = f.id_user " +
+                "INNER JOIN user u_friend ON u_friend.id_user = f.id_user_friend " +
+                "WHERE ((f.id_user=" + user.ID_User + ") OR (f.id_user_friend=" + user.ID_User + ")) AND f.accepted = 1;";
 
-        LinkedList<Friend> friends = new LinkedList<Friend>();
+
+
+        LinkedList<Friend> friends = new LinkedList<>();
 
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
@@ -93,6 +106,14 @@ public class DataBaseOperation {
 
         return friends;
     }
+
+    /**
+     * szuka uzytkownik po imieniu i nazwisku
+     * @param user user jakiego chcemy znalesc
+     * @param connection
+     * @return LinkedList<User> uzytkownicy ktorzy pasuje do frazy szukajacej
+     * @throws Exception
+     */
     public static LinkedList<User> FindUser(User user, Connection connection) throws Exception{
         String query = "SELECT id_user, name, lastname FROM user WHERE name LIKE '%" + user.Name + "%' OR lastname LIKE '%" + user.Lastname + "%';";
 
@@ -125,6 +146,7 @@ public class DataBaseOperation {
     }
 
     public static LinkedList<Friend> CheckFriendRequests (User user, Connection connection) throws SQLException {
+
         LinkedList<Friend> friendsRequested = new LinkedList<>();
 
         String query = "SELECT f.id_friend, f.id_user, f.id_user_friend, u.name, u.lastname FROM friend f\n" +
