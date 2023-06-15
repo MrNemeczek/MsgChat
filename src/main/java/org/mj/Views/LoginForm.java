@@ -40,10 +40,10 @@ public class LoginForm extends JFrame{
 
                     //logowanie sie powiodlo
                     if(user != null){
-                        LinkedList<Friend> friends = DataBaseOperation.GetFriends(user, conn);
+                        //LinkedList<Friend> friends = DataBaseOperation.GetFriends(user, conn);
                         //LinkedList<Friend> friendsRequested = DataBaseOperation.CheckFriendRequests(user, conn);
 
-                        MessagesForm msgForm = new MessagesForm (null, friends, user /*friendsRequested*/, conn);
+                        MessagesForm msgForm = new MessagesForm (null /*friends*/, user /*friendsRequested*/, conn);
 
                         dispose();
                     }

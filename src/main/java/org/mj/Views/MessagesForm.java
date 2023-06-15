@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.mj.Database.*;
 import org.mj.Models.*;
 
@@ -17,13 +22,20 @@ public class MessagesForm extends JFrame implements ActionListener{
     private JTextField MessageField;
     private JPanel MainPanel;
     private JButton SendButton;
-    private JScrollPane MessagesPanel;
+    private JScrollPane MessagesScrollPanel;
     private JPanel FriendsPanel;
     private JScrollPane FriendsScrollPanel;
     private JScrollPane RequestsScrollPanel;
     private JPanel RequestsPanel;
+    private JPanel MessagePanel;
 
-    public  MessagesForm(JFrame parent, LinkedList<Friend> friends, User currentUser /*LinkedList<Friend> friendsRequested*/, Connection conn) throws SQLException {
+    private int ID_texting_friend;
+    private User _currentUser;
+    private Connection _conn;
+
+    public  MessagesForm(JFrame parent/*, LinkedList<Friend> friends*/, User currentUser /*LinkedList<Friend> friendsRequested*/, Connection conn) throws SQLException {
+        _currentUser = currentUser;
+        _conn = conn;
 
         setTitle("Messages");
         setContentPane(MainPanel);
@@ -32,8 +44,9 @@ public class MessagesForm extends JFrame implements ActionListener{
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
 
-        setFriendsPanel(friends);
-        setRequestsPanel(/*friendsRequested*/ conn, currentUser);
+        //TODO: zapakowac do jednej metody np. SetPanels()
+        setFriendsPanel();
+        setRequestsPanel();
 
         AddFriendButton.addActionListener(new ActionListener() {
             @Override
@@ -43,10 +56,26 @@ public class MessagesForm extends JFrame implements ActionListener{
             }
         });
 
+        SendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                try {
+                    SendMessage();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+
+            }
+        });
+
         }
 
-    private void setFriendsPanel(LinkedList<Friend> friends){
+    private void setFriendsPanel() throws SQLException{
         FriendsPanel.removeAll();
+        LinkedList<Friend> friends = DataBaseOperation.GetFriends(_currentUser, _conn);
         for(var friend : friends){
 
             JButton friendButton = new JButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
@@ -55,12 +84,42 @@ public class MessagesForm extends JFrame implements ActionListener{
             FriendsPanel.revalidate();
             FriendsPanel.repaint();
 
+            friendButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    try {
+                        LinkedList<Message> messages = DataBaseOperation.GetMessages(_currentUser, friend, _conn);
+                        ID_texting_friend = friend.User_Friend.ID_User;
+
+                        MessagePanel.removeAll();
+                        MessagePanel.revalidate();
+                        MessagePanel.repaint();
+
+                        for(var msg : messages){
+
+                            JLabel msgLabel = new JLabel(msg.Content);
+                            System.out.println(msg.Content);
+                            MessagePanel.add(msgLabel);
+                            MessagePanel.revalidate();
+                            MessagePanel.repaint();
+                        }
+                        // projekt sendButton
+
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                }
+            });
+
         }
         System.out.println("Zapytano o znajomych");
 
     }
 
-    private void setRequestsPanel(/*LinkedList<Friend> friendsRequested, */Connection conn, User currentUser) throws SQLException {
+    private void setRequestsPanel() throws SQLException {
 
         class Multi extends Thread{
             public void run(){
@@ -68,7 +127,8 @@ public class MessagesForm extends JFrame implements ActionListener{
                     while (true){
 
                         RequestsPanel.removeAll();
-                        LinkedList<Friend> friendsRequested = DataBaseOperation.CheckFriendRequests(currentUser, conn);
+                        setFriendsPanel();
+                        LinkedList<Friend> friendsRequested = DataBaseOperation.CheckFriendRequests(_currentUser, _conn);
                         for (var friend : friendsRequested) {
 
                             JButton requestButton = new JButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
@@ -85,9 +145,9 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                                     if (response == JOptionPane.YES_OPTION) {
                                         try {
-                                            DataBaseOperation.AcceptFriendRequest(friend, conn);
-                                            LinkedList<Friend> friends = DataBaseOperation.GetFriends(currentUser, conn);
-                                            setFriendsPanel(friends);
+                                            DataBaseOperation.AcceptFriendRequest(friend, _conn);
+                                            LinkedList<Friend> friends = DataBaseOperation.GetFriends(_currentUser, _conn);
+                                            setFriendsPanel();
                                             RequestsPanel.remove(requestButton);
                                             RequestsPanel.revalidate();
                                             RequestsPanel.repaint();
@@ -100,6 +160,7 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                         }
                         System.out.println("Zapytano o zaproszenia");
+                        setFriendsPanel();
 
                         Thread.sleep(5000);
                     }
@@ -110,7 +171,6 @@ public class MessagesForm extends JFrame implements ActionListener{
         Multi t1 = new Multi();
         t1.start();
 
-
     }
 
     private void createUIComponents() {
@@ -118,8 +178,52 @@ public class MessagesForm extends JFrame implements ActionListener{
         FriendsPanel.setLayout(new BoxLayout(FriendsPanel, BoxLayout.Y_AXIS));
         RequestsPanel = new JPanel();
         RequestsPanel.setLayout(new BoxLayout(RequestsPanel, BoxLayout.Y_AXIS));
+        MessagePanel = new JPanel();
+        MessagePanel.setLayout(new BoxLayout(MessagePanel, BoxLayout.Y_AXIS));
     }
 
+    private void SendMessage() throws SQLException {
+        String content = MessageField.getText();
+
+        DataBaseOperation.SendMessage(_currentUser, ID_texting_friend, content, _conn);
+
+        //######## MQTT ########
+        String broker = "tcp://40.115.61.160:1883";
+        String topic = "mqtt/"+ID_texting_friend+"/"+_currentUser.ID_User;
+        String username = _currentUser.Name;
+        String password = _currentUser.Password;
+        String clientid = "test3";
+
+        int qos = 1;
+
+        int cos = _currentUser.ID_User;
+
+        try {
+            MqttClient client = new MqttClient(broker ,clientid, new MemoryPersistence());
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setUserName(username);
+            options.setPassword(password.toCharArray());
+            options.setConnectionTimeout(60);
+            options.setKeepAliveInterval(60);
+            // connect
+            client.connect(options);
+            // create message and setup QoS
+            MqttMessage message = new MqttMessage(("user " + username +": " + content).getBytes());
+            message.setQos(qos);
+            message.setRetained(qos>0);
+            // publish message
+            client.publish(topic, message);
+            System.out.println("Message published");
+            System.out.println("topic: " + topic);
+            System.out.println("message content: " + content);
+            // disconnect
+            client.disconnect();
+            // close client
+            client.close();
+        } catch (MqttException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
 

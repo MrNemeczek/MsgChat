@@ -29,18 +29,21 @@ public class SearchUserForm extends JFrame implements ActionListener{
        SearchButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
+               UsersPanel.removeAll();
+
                String namelastname = SearchField.getText();
                String[] name_lastname = namelastname.split(" ");
+               String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
+
                User usertofind = new User();
                usertofind.Name = name_lastname[0];
                usertofind.Lastname = name_lastname[1];
-               String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
 
                Connection conn = DataBaseOperation.ConnectToDB(connectionUrl);
                try {
-                   LinkedList<User> users = DataBaseOperation.FindUser(usertofind, conn);
-                   for(var user : users){
-                       JButton FoundButton = new JButton(user.Name + " " + user.Lastname);
+                   LinkedList<User> foundUsers = DataBaseOperation.FindUser(usertofind, conn);
+                   for(var foundUser : foundUsers){
+                       JButton FoundButton = new JButton(foundUser.Name + " " + foundUser.Lastname);
                        FoundButton.setSize(new Dimension(50,50));
 
                        UsersPanel.add(FoundButton);
