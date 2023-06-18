@@ -100,19 +100,31 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                             JLabel msgLabel = new JLabel(msg.Content);
 
-                            if(msg.ID_User_Sender == _currentUser.ID_User) {
-                                msgLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+//                            if(msg.ID_User_Sender == _currentUser.ID_User) {
+//                                msgLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 //                            msgLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+   //                         }
+
+//                            JPanel test = new JPanel();
+//                            BoxLayout layout = new BoxLayout(test, BoxLayout.Y_AXIS);
+//                            test.setLayout(layout);
+
+//                            MessagePanel.add(test);
+
+
+
+                            if(msg.ID_User_Sender == _currentUser.ID_User){
+
+                                MessagePanel.add(placeLeft((msgLabel)));
+
+                            }
+                            else{
+
+                                MessagePanel.add(placeRight(msgLabel));
+
                             }
 
-                            JPanel test = new JPanel();
-                            BoxLayout layout = new BoxLayout(test, BoxLayout.Y_AXIS);
-                            test.setLayout(layout);
-
-                            MessagePanel.add(test);
-
-                            //MessagePanel.add(msgLabel);
-                            test.add(msgLabel);
+//                            test.add(msgLabel);
                             MessagePanel.revalidate();
                             MessagePanel.repaint();
                         }
@@ -130,7 +142,24 @@ public class MessagesForm extends JFrame implements ActionListener{
         System.out.println("Zapytano o znajomych");
 
     }
+static JPanel createBoxXWith(Component... components){
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+    for (Component c : components)
+        panel.add(c);
+    return panel;
+}
+    static JPanel placeRight(Component component) {
+        return createBoxXWith(Box.createHorizontalGlue(), component);
+    }
 
+    static JPanel placeLeft(Component component) {
+        return createBoxXWith(component, Box.createHorizontalGlue());
+    }
+
+    static JPanel placeCenter(Component component) {
+        return createBoxXWith(Box.createHorizontalGlue(), component, Box.createHorizontalGlue());
+    }
     private void setRequestsPanel() throws SQLException {
 
         class Multi extends Thread{
