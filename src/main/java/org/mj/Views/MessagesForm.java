@@ -99,8 +99,20 @@ public class MessagesForm extends JFrame implements ActionListener{
                         for(var msg : messages){
 
                             JLabel msgLabel = new JLabel(msg.Content);
-                            System.out.println(msg.Content);
-                            MessagePanel.add(msgLabel);
+
+                            if(msg.ID_User_Sender == _currentUser.ID_User) {
+                                msgLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+//                            msgLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+                            }
+
+                            JPanel test = new JPanel();
+                            BoxLayout layout = new BoxLayout(test, BoxLayout.Y_AXIS);
+                            test.setLayout(layout);
+
+                            MessagePanel.add(test);
+
+                            //MessagePanel.add(msgLabel);
+                            test.add(msgLabel);
                             MessagePanel.revalidate();
                             MessagePanel.repaint();
                         }
@@ -194,7 +206,7 @@ public class MessagesForm extends JFrame implements ActionListener{
         String password = _currentUser.Password;
         String clientid = "test3";
 
-        int qos = 1;
+        int qos = 0;
 
         int cos = _currentUser.ID_User;
 
@@ -205,13 +217,12 @@ public class MessagesForm extends JFrame implements ActionListener{
             options.setPassword(password.toCharArray());
             options.setConnectionTimeout(60);
             options.setKeepAliveInterval(60);
-            // connect
+
             client.connect(options);
-            // create message and setup QoS
+
             MqttMessage message = new MqttMessage(("user " + username +": " + content).getBytes());
             message.setQos(qos);
-            message.setRetained(qos>0);
-            // publish message
+
             client.publish(topic, message);
             System.out.println("Message published");
             System.out.println("topic: " + topic);

@@ -196,6 +196,7 @@ public class DataBaseOperation {
             Message message = new Message();
 
             message.ID_Message = rs.getInt("id_message");
+            message.ID_User_Sender = rs.getInt("id_user_sender");
             message.Content = rs.getString("content");
 
             //TODO: pobieranie timestampu
