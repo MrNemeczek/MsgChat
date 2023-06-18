@@ -196,6 +196,11 @@ public class MessagesForm extends JFrame implements ActionListener{
 
         DataBaseOperation.SendMessage(_currentUser, ID_texting_friend, content, _conn);
 
+        JLabel msgLabel = new JLabel(content);
+        MessagePanel.add(MyUI.placeRight(msgLabel));
+        MessagePanel.revalidate();
+        MessagePanel.repaint();
+
         MQTTClientThread MQTTClient = new MQTTClientThread(content, _currentUser, ID_texting_friend);
         MQTTClient.start();
 
