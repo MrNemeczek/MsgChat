@@ -9,13 +9,15 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.*;
+//import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+//import org.eclipse.paho.client.mqttv3.MqttException;
+//import org.eclipse.paho.client.mqttv3.MqttMessage;
+//import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.mj.Database.*;
 import org.mj.Models.*;
+import org.mj.Functions.*;
 
 public class MessagesForm extends JFrame implements ActionListener{
     private JButton AddFriendButton;
@@ -100,36 +102,20 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                             JLabel msgLabel = new JLabel(msg.Content);
 
-//                            if(msg.ID_User_Sender == _currentUser.ID_User) {
-//                                msgLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
-//                            msgLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-   //                         }
-
-//                            JPanel test = new JPanel();
-//                            BoxLayout layout = new BoxLayout(test, BoxLayout.Y_AXIS);
-//                            test.setLayout(layout);
-
-//                            MessagePanel.add(test);
-
-
-
                             if(msg.ID_User_Sender == _currentUser.ID_User){
-
-                                MessagePanel.add(placeLeft((msgLabel)));
-
+                                MessagePanel.add(MyUI.placeRight(msgLabel));
                             }
                             else{
-
-                                MessagePanel.add(placeRight(msgLabel));
-
+                                MessagePanel.add(MyUI.placeLeft(msgLabel));
                             }
 
 //                            test.add(msgLabel);
                             MessagePanel.revalidate();
                             MessagePanel.repaint();
                         }
-                        // projekt sendButton
 
+                        //uruchomienie subskrybenta tematu
+                        ReceiveMessage(ID_texting_friend);
 
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
@@ -141,24 +127,6 @@ public class MessagesForm extends JFrame implements ActionListener{
         }
         System.out.println("Zapytano o znajomych");
 
-    }
-static JPanel createBoxXWith(Component... components){
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-    for (Component c : components)
-        panel.add(c);
-    return panel;
-}
-    static JPanel placeRight(Component component) {
-        return createBoxXWith(Box.createHorizontalGlue(), component);
-    }
-
-    static JPanel placeLeft(Component component) {
-        return createBoxXWith(component, Box.createHorizontalGlue());
-    }
-
-    static JPanel placeCenter(Component component) {
-        return createBoxXWith(Box.createHorizontalGlue(), component, Box.createHorizontalGlue());
     }
     private void setRequestsPanel() throws SQLException {
 
@@ -228,41 +196,66 @@ static JPanel createBoxXWith(Component... components){
 
         DataBaseOperation.SendMessage(_currentUser, ID_texting_friend, content, _conn);
 
-        //######## MQTT ########
-        String broker = "tcp://40.115.61.160:1883";
-        String topic = "mqtt/"+ID_texting_friend+"/"+_currentUser.ID_User;
-        String username = _currentUser.Name;
-        String password = _currentUser.Password;
-        String clientid = "test3";
+        MQTTClientThread MQTTClient = new MQTTClientThread(content, _currentUser, ID_texting_friend);
+        MQTTClient.start();
 
-        int qos = 0;
+        MessageField.setText("");
+    }
 
-        int cos = _currentUser.ID_User;
+    private void ReceiveMessage(int IDTextingFriend){
+        class MyThread extends Thread{
+            public void run(){
 
-        try {
-            MqttClient client = new MqttClient(broker ,clientid, new MemoryPersistence());
-            MqttConnectOptions options = new MqttConnectOptions();
-            options.setUserName(username);
-            options.setPassword(password.toCharArray());
-            options.setConnectionTimeout(60);
-            options.setKeepAliveInterval(60);
 
-            client.connect(options);
+                String broker = "tcp://40.115.61.160:1883";
+                String topic = "mqtt/"+_currentUser.ID_User+"/"+IDTextingFriend;
+                String username = _currentUser.Name;
+                String password = _currentUser.Password;
+                String clientid = "test2";
+                int qos = 0;
 
-            MqttMessage message = new MqttMessage(("user " + username +": " + content).getBytes());
-            message.setQos(qos);
+                //System.out.println("nasluchiwanie wlaczone dla: " + topic);
 
-            client.publish(topic, message);
-            System.out.println("Message published");
-            System.out.println("topic: " + topic);
-            System.out.println("message content: " + content);
-            // disconnect
-            client.disconnect();
-            // close client
-            client.close();
-        } catch (MqttException e) {
-            throw new RuntimeException(e);
+                try {
+                    MqttClient client = new MqttClient(broker, clientid, new MemoryPersistence());
+
+                    MqttConnectOptions options = new MqttConnectOptions();
+                    options.setUserName(username);
+                    options.setPassword(password.toCharArray());
+                    options.setConnectionTimeout(60);
+                    options.setKeepAliveInterval(60);
+
+                    //TODO: skrocic to kurestwo
+                    client.setCallback(new MqttCallback() {
+
+                        public void connectionLost(Throwable cause) {
+                            System.out.println("connectionLost: " + cause.getMessage());
+                        }
+
+                        public void messageArrived(String topic, MqttMessage message) {
+                            System.out.println("message content: " + new String(message.getPayload()));
+                            JLabel msgLabel = new JLabel(new String(message.getPayload()));
+                            MessagePanel.add(MyUI.placeLeft(msgLabel));
+                            MessagePanel.revalidate();
+                            MessagePanel.repaint();
+                        }
+
+                        public void deliveryComplete(IMqttDeliveryToken token) {
+                            System.out.println("deliveryComplete---------" + token.isComplete());
+                        }
+
+                    });
+
+                    client.connect(options);
+                    client.subscribe(topic, qos);
+                } catch (MqttException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
+        MyThread t = new MyThread();
+        t.start();
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {
