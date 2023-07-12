@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.mj.Functions.MQTTRegistryClientThread;
 import org.mj.Models.*;
 import org.mj.Database.*;
 
@@ -41,6 +42,8 @@ public class RegisterForm extends JFrame{
                 //TODO: sprobowac przeniesc try catcha do DataBaseOperation
                 try {
                     DataBaseOperation.Registry(user, conn);
+                    MQTTRegistryClientThread registryClientThread = new MQTTRegistryClientThread(user);
+                    registryClientThread.start();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

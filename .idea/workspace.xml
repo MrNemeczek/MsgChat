@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="Receiving messages added">
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="dynamic display messages on sending added">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" afterDir="false" />
     </list>
     <list id="c9571aa0-ebca-4048-a168-e38d347c46f4" name="Changes by jerem" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +41,7 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "deletionFromPopupRequiresConfirmation": "false",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/jerem/IdeaProjects/MQTT.Receive.Test"
+    "last_opened_file_path": "C:/Users/jerem/IdeaProjects/MsgChat"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -185,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687114130402</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="dynamic display messages on sending added">
+      <created>1687118869695</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1687118869695</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -208,6 +216,7 @@
     <MESSAGE value="Dodano wysylanie i akceptowanie zaproszen" />
     <MESSAGE value="Interval queries for friend requests have been added, as well as the addition of a friend button upon acceptance of the invitation" />
     <MESSAGE value="Receiving messages added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Receiving messages added" />
+    <MESSAGE value="dynamic display messages on sending added" />
+    <option name="LAST_COMMIT_MESSAGE" value="dynamic display messages on sending added" />
   </component>
 </project>
