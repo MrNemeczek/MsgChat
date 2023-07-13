@@ -32,13 +32,18 @@ public class MQTTRegistryClientThread extends Thread{
 
             client.connect(options);
 
-            MqttMessage message = new MqttMessage(("{\"commands\": [{\"command\": \"createClient\", \"username\": \"new username\",\"password\": \"new password\"}]}").getBytes());
+            MqttMessage message = new MqttMessage(("{\"commands\": [" +
+                    "{\"command\": \"createClient\"," +
+                    " \"username\": \"" + _newClient.Login + "\"," +
+                    "\"password\": \"" + _newClient.Password + "\"," +
+                    "\"groups\": [" +
+                    "{\"groupname\": \"user\", " +
+                    "\"priority\": 1}]" +
+                    "}]" +
+                    "}").getBytes());
             message.setQos(qos);
 
             client.publish(topic, message);
-            System.out.println("Message published");
-            System.out.println("topic: " + topic);
-            System.out.println("message content: " + "");
 
             client.disconnect();
             client.close();

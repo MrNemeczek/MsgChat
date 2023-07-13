@@ -51,7 +51,7 @@ public class SearchUserForm extends JFrame implements ActionListener{
                        FoundButton.addActionListener(new ActionListener() {
                            @Override
                            public void actionPerformed(ActionEvent e) {
-                               int response = JOptionPane.showConfirmDialog(null, "Are you sure?");
+                               int response = JOptionPane.showConfirmDialog(null, "Do you want to send friend request to: " + foundUser.Name + " " + foundUser.Lastname + "?", "Friend request", JOptionPane.YES_NO_OPTION);
 
                                if(response == JOptionPane.YES_OPTION){
                                    try {

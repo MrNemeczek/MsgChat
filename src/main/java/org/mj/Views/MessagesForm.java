@@ -30,23 +30,26 @@ public class MessagesForm extends JFrame implements ActionListener{
     private JScrollPane RequestsScrollPanel;
     private JPanel RequestsPanel;
     private JPanel MessagePanel;
+    private JButton LogoutButton;
+    private JLabel UserLabel;
 
     private int ID_texting_friend;
     private User _currentUser;
     private Connection _conn;
 
-    public  MessagesForm(JFrame parent/*, LinkedList<Friend> friends*/, User currentUser /*LinkedList<Friend> friendsRequested*/, Connection conn) throws SQLException {
+    public  MessagesForm(JFrame parent, User currentUser, Connection conn) throws SQLException {
         _currentUser = currentUser;
         _conn = conn;
 
         setTitle("Messages");
         setContentPane(MainPanel);
-        setMinimumSize(new Dimension(450, 300));
+        setMinimumSize(new Dimension(800, 800));
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
 
-        //TODO: zapakowac do jednej metody np. SetPanels()
+        UserLabel.setText(currentUser.Name + " " + currentUser.Lastname);
+
         setFriendsPanel();
         setRequestsPanel();
 
@@ -73,7 +76,14 @@ public class MessagesForm extends JFrame implements ActionListener{
             }
         });
 
-        }
+        LogoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginForm loginForm = new LoginForm(null);
+                dispose();
+            }
+        });
+    }
 
     private void setFriendsPanel() throws SQLException{
         FriendsPanel.removeAll();
@@ -129,7 +139,6 @@ public class MessagesForm extends JFrame implements ActionListener{
 
     }
     private void setRequestsPanel() throws SQLException {
-
         class Multi extends Thread{
             public void run(){
                 try {
@@ -150,7 +159,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                             requestButton.addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    int response = JOptionPane.showConfirmDialog(null, "Are you sure?");
+                                    int response = JOptionPane.showConfirmDialog(null, "Do you want to accept friend request from: " + friend.User_Friend.Name + " " + friend.User_Friend.Lastname + "?", "Friend request", JOptionPane.YES_NO_OPTION);
 
                                     if (response == JOptionPane.YES_OPTION) {
                                         try {
@@ -170,7 +179,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                         }
                         System.out.println("Zapytano o zaproszenia");
                         setFriendsPanel();
-
+                        //TODO: zmniejszyc czas
                         Thread.sleep(5000);
                     }
                 }catch (InterruptedException | SQLException e) {

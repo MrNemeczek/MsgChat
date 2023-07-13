@@ -18,11 +18,12 @@ public class RegisterForm extends JFrame{
     private JPasswordField PasswordField;
     private JButton RegistryButton;
     private JPanel MainPanel;
+    private JButton LoginButton;
 
     public RegisterForm(JFrame parent){
         setTitle("Registry");
         setContentPane(MainPanel);
-        setMinimumSize(new Dimension(450, 300));
+        setMinimumSize(new Dimension(450, 350));
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
@@ -49,6 +50,13 @@ public class RegisterForm extends JFrame{
                 }
 
                 JOptionPane.showMessageDialog(null, "Account created");
+                LoginForm loginForm = new LoginForm(null);
+                dispose();
+            }
+        });
+        LoginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 LoginForm loginForm = new LoginForm(null);
                 dispose();
             }
