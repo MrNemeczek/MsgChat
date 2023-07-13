@@ -5,5 +5,5 @@ public class Message {
     public int ID_User_Sender;
     public int ID_User_Receiver;
     public String Content;
-    //TODO: pole z timestampem
+    public java.sql.Timestamp Timestamp;
 }

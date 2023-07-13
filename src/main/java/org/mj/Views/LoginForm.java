@@ -39,17 +39,13 @@ public class LoginForm extends JFrame{
                 try {
                     User user = DataBaseOperation.Login(login, password, conn);
 
-                    //logowanie sie powiodlo
                     if(user != null){
-                        //LinkedList<Friend> friends = DataBaseOperation.GetFriends(user, conn);
-                        //LinkedList<Friend> friendsRequested = DataBaseOperation.CheckFriendRequests(user, conn);
-
                         MessagesForm msgForm = new MessagesForm (null /*friends*/, user /*friendsRequested*/, conn);
 
                         dispose();
                     }
                     else{
-                        //TODO: komunikat ze bledne haslo lub login
+                        JOptionPane.showMessageDialog(null, "Incorrect login or password!");
                     }
 
                 } catch (SQLException ex) {

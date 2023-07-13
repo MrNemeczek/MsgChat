@@ -198,9 +198,7 @@ public class DataBaseOperation {
             message.ID_Message = rs.getInt("id_message");
             message.ID_User_Sender = rs.getInt("id_user_sender");
             message.Content = rs.getString("content");
-
-            //TODO: pobieranie timestampu
-            //message. = rs.getInt("id_user");
+            message.Timestamp = rs.getTimestamp("ts");
 
             messages.add(message);
         }
