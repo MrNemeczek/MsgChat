@@ -59,13 +59,26 @@ public class DataBaseOperation {
      * @throws SQLException
      */
     public static boolean Registry(User user, Connection connection) throws SQLException {
+        String checkLoginExists = "SELECT login FROM user WHERE login='" + user.Login + "';";
         String query = "INSERT INTO user (`login`, `password`, `name`, `lastname`) VALUES ('" + user.Login + "', '" + user.Password + "', '" + user.Name + "', '" + user.Lastname + "');";
 
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.executeUpdate(query);
+        //PreparedStatement ps = connection.prepareStatement(query);
+        PreparedStatement ps = connection.prepareStatement(checkLoginExists);
+        ResultSet rs = ps.executeQuery();
 
-        //TODO: dodac false jesli sie nie powiedzie i jesli dany login juz istnieje w bazie
-        return true;
+        if(!rs.next()) {
+            ps = connection.prepareStatement(query);
+            ps.executeUpdate(query);
+
+            System.out.println("nie ma takiego loginu");
+
+            return true;
+        }
+        else{
+            System.out.println("jest juz taki login");
+
+            return false;
+        }
     }
 
     /**

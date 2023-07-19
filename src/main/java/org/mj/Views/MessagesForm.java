@@ -149,9 +149,9 @@ public class MessagesForm extends JFrame implements ActionListener{
                         RequestsPanel.removeAll();
                         setFriendsPanel();
                         LinkedList<Friend> friendsRequested = DataBaseOperation.CheckFriendRequests(_currentUser, _conn);
-                        for (var friend : friendsRequested) {
+                        for (var friendRequest : friendsRequested) {
 
-                            JButton requestButton = new JButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
+                            JButton requestButton = new JButton(friendRequest.User_Friend.Name + " " + friendRequest.User_Friend.Lastname);
                             requestButton.setSize(new Dimension(50, 50));
                             RequestsPanel.add(requestButton);
                             RequestsPanel.revalidate();
@@ -161,11 +161,11 @@ public class MessagesForm extends JFrame implements ActionListener{
                             requestButton.addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    int response = JOptionPane.showConfirmDialog(null, "Do you want to accept friend request from: " + friend.User_Friend.Name + " " + friend.User_Friend.Lastname + "?", "Friend request", JOptionPane.YES_NO_OPTION);
+                                    int response = JOptionPane.showConfirmDialog(null, "Do you want to accept friend request from: " + friendRequest.User_Friend.Name + " " + friendRequest.User_Friend.Lastname + "?", "Friend request", JOptionPane.YES_NO_OPTION);
 
                                     if (response == JOptionPane.YES_OPTION) {
                                         try {
-                                            DataBaseOperation.AcceptFriendRequest(friend, _conn);
+                                            DataBaseOperation.AcceptFriendRequest(friendRequest, _conn);
                                             LinkedList<Friend> friends = DataBaseOperation.GetFriends(_currentUser, _conn);
                                             setFriendsPanel();
                                             RequestsPanel.remove(requestButton);

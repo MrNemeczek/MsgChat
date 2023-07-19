@@ -38,20 +38,22 @@ public class RegisterForm extends JFrame{
                 user.Lastname = LastnameField.getText();
 
                 String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
-                //TODO: zrobic to na watkach
                 Connection conn = DataBaseOperation.ConnectToDB(connectionUrl);
                 //TODO: sprobowac przeniesc try catcha do DataBaseOperation
                 try {
-                    DataBaseOperation.Registry(user, conn);
-                    MQTTRegistryClientThread registryClientThread = new MQTTRegistryClientThread(user);
-                    registryClientThread.start();
+                    if(DataBaseOperation.Registry(user, conn)){
+                        MQTTRegistryClientThread registryClientThread = new MQTTRegistryClientThread(user);
+                        registryClientThread.start();
+                        JOptionPane.showMessageDialog(null, "Account created");
+                        LoginForm loginForm = new LoginForm(null);
+                        dispose();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "There is already an account with this login");
+                    }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-
-                JOptionPane.showMessageDialog(null, "Account created");
-                LoginForm loginForm = new LoginForm(null);
-                dispose();
             }
         });
         LoginButton.addActionListener(new ActionListener() {

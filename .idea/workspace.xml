@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="Frontend SearchUserForm modified and added FlexButton in MyUI">
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="stopped threads when loggout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" afterDir="false" />
     </list>
     <list id="c9571aa0-ebca-4048-a168-e38d347c46f4" name="Changes by jerem" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -233,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689790229694</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="stopped threads when loggout">
+      <created>1689791654080</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1689791654080</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -261,6 +270,7 @@
     <MESSAGE value="completed tasks: 26, 3, 27, 1, 16, 17, 24, 10, 15" />
     <MESSAGE value="getting timestamp" />
     <MESSAGE value="Frontend SearchUserForm modified and added FlexButton in MyUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Frontend SearchUserForm modified and added FlexButton in MyUI" />
+    <MESSAGE value="stopped threads when loggout" />
+    <option name="LAST_COMMIT_MESSAGE" value="stopped threads when loggout" />
   </component>
 </project>
