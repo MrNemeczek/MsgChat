@@ -22,4 +22,14 @@ public class MyUI {
     public static JPanel placeCenter(Component component) {
         return createBoxXWith(Box.createHorizontalGlue(), component, Box.createHorizontalGlue());
     }
+
+    public static JButton FlexButton(String text){
+        JButton Button = new JButton(text);
+        //dark green
+        Button.setBackground(new Color(42,85,43));
+        //white
+        Button.setForeground(new Color(255,255,255));
+
+        return Button;
+    }
 }

@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="completed tasks: 26, 3, 27, 1, 16, 17, 24, 10, 15">
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="getting timestamp">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Models/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MyUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
     </list>
     <list id="c9571aa0-ebca-4048-a168-e38d347c46f4" name="Changes by jerem" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,11 +26,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -221,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689271203097</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="getting timestamp">
+      <created>1689276787616</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1689276787616</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -247,6 +254,7 @@
     <MESSAGE value="dynamic display messages on sending added" />
     <MESSAGE value="added adding new clients to mosquitto" />
     <MESSAGE value="completed tasks: 26, 3, 27, 1, 16, 17, 24, 10, 15" />
-    <option name="LAST_COMMIT_MESSAGE" value="completed tasks: 26, 3, 27, 1, 16, 17, 24, 10, 15" />
+    <MESSAGE value="getting timestamp" />
+    <option name="LAST_COMMIT_MESSAGE" value="getting timestamp" />
   </component>
 </project>

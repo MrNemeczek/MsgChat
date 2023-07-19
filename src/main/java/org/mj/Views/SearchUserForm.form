@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-12346790"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="eebbe" class="javax.swing.JTextField" binding="SearchField">
@@ -14,13 +16,17 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-12274059"/>
+          <enabled value="true"/>
+        </properties>
       </component>
       <component id="6e3e4" class="javax.swing.JLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <foreground color="-16777216"/>
           <text value="Type Name and Lastname"/>
         </properties>
       </component>
@@ -39,6 +45,8 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-14002901"/>
+          <foreground color="-1"/>
           <label value="Search"/>
           <text value="Search"/>
         </properties>

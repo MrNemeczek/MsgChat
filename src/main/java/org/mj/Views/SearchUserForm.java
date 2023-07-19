@@ -1,6 +1,7 @@
 package org.mj.Views;
 
 import org.mj.Database.DataBaseOperation;
+import org.mj.Functions.MyUI;
 import org.mj.Models.User;
 
 import javax.swing.*;
@@ -43,11 +44,13 @@ public class SearchUserForm extends JFrame implements ActionListener{
                try {
                    LinkedList<User> foundUsers = DataBaseOperation.FindUser(usertofind, conn);
                    for(var foundUser : foundUsers){
-                       JButton FoundButton = new JButton(foundUser.Name + " " + foundUser.Lastname);
-                       FoundButton.setSize(new Dimension(50,50));
+                       //JButton FoundButton = new JButton(foundUser.Name + " " + foundUser.Lastname);
+                       JButton FoundButton = MyUI.FlexButton(foundUser.Name + " " + foundUser.Lastname);
+                       //FoundButton.setSize(new Dimension(150,150));
+                       System.out.println("wysokosc: " + UsersPanel.getHeight() + " Szerokosc:" + UsersPanel.getWidth());
 
                        UsersPanel.add(FoundButton);
-
+                       //UsersPanel.add(FoundButton, BorderLayout.CENTER);
                        FoundButton.addActionListener(new ActionListener() {
                            @Override
                            public void actionPerformed(ActionEvent e) {
@@ -79,7 +82,8 @@ public class SearchUserForm extends JFrame implements ActionListener{
     private void createUIComponents() {
          UsersPanel = new JPanel(new GridBagLayout());
          UsersPanel.setLayout(new BoxLayout(UsersPanel, BoxLayout.Y_AXIS));
-
+//        UsersPanel = new JPanel();
+//        UsersPanel.setLayout(new BorderLayout());
 
      }
 
