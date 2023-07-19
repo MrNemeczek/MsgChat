@@ -36,6 +36,7 @@ public class MessagesForm extends JFrame implements ActionListener{
     private int ID_texting_friend;
     private User _currentUser;
     private Connection _conn;
+    private boolean _logged = true;
 
     public  MessagesForm(JFrame parent, User currentUser, Connection conn) throws SQLException {
         _currentUser = currentUser;
@@ -80,6 +81,7 @@ public class MessagesForm extends JFrame implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 LoginForm loginForm = new LoginForm(null);
+                _logged = false;
                 dispose();
             }
         });
@@ -142,7 +144,7 @@ public class MessagesForm extends JFrame implements ActionListener{
         class Multi extends Thread{
             public void run(){
                 try {
-                    while (true){
+                    while (_logged){
 
                         RequestsPanel.removeAll();
                         setFriendsPanel();
@@ -178,7 +180,7 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                         }
                         System.out.println("Zapytano o zaproszenia");
-                        setFriendsPanel();
+                        //setFriendsPanel();
                         //TODO: zmniejszyc czas
                         Thread.sleep(5000);
                     }
@@ -187,6 +189,7 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                 }}}
         Multi t1 = new Multi();
+        t1.setDaemon(true);
         t1.start();
 
     }

@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="getting timestamp">
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="Frontend SearchUserForm modified and added FlexButton in MyUI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MyUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
     </list>
     <list id="c9571aa0-ebca-4048-a168-e38d347c46f4" name="Changes by jerem" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -228,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689276787616</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Frontend SearchUserForm modified and added FlexButton in MyUI">
+      <created>1689790229694</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1689790229694</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -255,6 +260,7 @@
     <MESSAGE value="added adding new clients to mosquitto" />
     <MESSAGE value="completed tasks: 26, 3, 27, 1, 16, 17, 24, 10, 15" />
     <MESSAGE value="getting timestamp" />
-    <option name="LAST_COMMIT_MESSAGE" value="getting timestamp" />
+    <MESSAGE value="Frontend SearchUserForm modified and added FlexButton in MyUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Frontend SearchUserForm modified and added FlexButton in MyUI" />
   </component>
 </project>
