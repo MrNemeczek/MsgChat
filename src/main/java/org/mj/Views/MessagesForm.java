@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.RoundRectangle2D;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -92,7 +93,7 @@ public class MessagesForm extends JFrame implements ActionListener{
         LinkedList<Friend> friends = DataBaseOperation.GetFriends(_currentUser, _conn);
         for(var friend : friends){
 
-            JButton friendButton = new JButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
+            JButton friendButton = MyUI.FlexButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
             friendButton.setSize(new Dimension(50,50));
             FriendsPanel.add(friendButton);
             FriendsPanel.revalidate();
@@ -151,7 +152,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                         LinkedList<Friend> friendsRequested = DataBaseOperation.CheckFriendRequests(_currentUser, _conn);
                         for (var friendRequest : friendsRequested) {
 
-                            JButton requestButton = new JButton(friendRequest.User_Friend.Name + " " + friendRequest.User_Friend.Lastname);
+                            JButton requestButton = MyUI.FlexButton(friendRequest.User_Friend.Name + " " + friendRequest.User_Friend.Lastname);
                             requestButton.setSize(new Dimension(50, 50));
                             RequestsPanel.add(requestButton);
                             RequestsPanel.revalidate();
@@ -252,7 +253,27 @@ public class MessagesForm extends JFrame implements ActionListener{
                         public void messageArrived(String topic, MqttMessage message) {
                             System.out.println("message content: " + new String(message.getPayload()));
                             JLabel msgLabel = new JLabel(new String(message.getPayload()));
-                            MessagePanel.add(MyUI.placeLeft(msgLabel));
+
+                            JPanel roundedLabelPanel = new JPanel() {
+                                @Override
+                                protected void paintComponent(Graphics g) {
+                                    if (g instanceof Graphics2D) {
+                                        Graphics2D g2d = (Graphics2D) g;
+                                        int arc = 20; // Wielkość zaokrąglenia.
+
+                                        // Rysujemy zaokrąglone tło dla JLabel.
+                                        g2d.setColor(getBackground());
+                                        g2d.fill(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, arc, arc));
+                                    }
+                                }
+                            };
+                            roundedLabelPanel.add(msgLabel);
+                            roundedLabelPanel.setPreferredSize(new Dimension(200, 60));
+                            roundedLabelPanel.setBackground(Color.LIGHT_GRAY);
+
+
+                            //MessagePanel.add(MyUI.placeLeft(msgLabel));
+                            MessagePanel.add(MyUI.placeLeft(roundedLabelPanel));
                             MessagePanel.revalidate();
                             MessagePanel.repaint();
                         }

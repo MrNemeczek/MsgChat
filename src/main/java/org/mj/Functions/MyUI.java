@@ -6,6 +6,7 @@ import java.awt.*;
 public class MyUI {
     private static JPanel createBoxXWith(Component... components){
         JPanel panel = new JPanel();
+        panel.setBackground(new Color(68,182,117));
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         for (Component c : components)
             panel.add(c);
