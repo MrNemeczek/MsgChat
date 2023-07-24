@@ -32,28 +32,37 @@ public class SearchUserForm extends JFrame implements ActionListener{
            public void actionPerformed(ActionEvent e) {
                UsersPanel.removeAll();
 
-               String namelastname = SearchField.getText();
-               String[] name_lastname = namelastname.split(" ");
                String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
-
-               User usertofind = new User();
-               usertofind.Name = name_lastname[0];
-               usertofind.Lastname = name_lastname[1];
 
                Connection conn = DataBaseOperation.ConnectToDB(connectionUrl);
                try {
-                   LinkedList<User> foundUsers = DataBaseOperation.FindUser(usertofind, conn);
+                   LinkedList<User> foundUsers = DataBaseOperation.FindUser(SearchField.getText(), conn);
+                   if(foundUsers == null){
+                       JOptionPane.showMessageDialog(null, "No user found");
+                       return;
+                   }
                    for(var foundUser : foundUsers){
                        //JButton FoundButton = new JButton(foundUser.Name + " " + foundUser.Lastname);
                        JButton FoundButton = MyUI.FlexButton(foundUser.Name + " " + foundUser.Lastname);
-                       //FoundButton.setSize(new Dimension(150,150));
-                       System.out.println("wysokosc: " + UsersPanel.getHeight() + " Szerokosc:" + UsersPanel.getWidth());
+//                       FoundButton.setSize(new Dimension(150,150));
+                       //System.out.println("wysokosc: " + UsersPanel.getHeight() + " Szerokosc:" + UsersPanel.getWidth());
 
-                       UsersPanel.add(FoundButton);
+                       //UsersPanel.add(FoundButton);
+                       UsersPanel.add(FoundButton, BorderLayout.CENTER);
                        //UsersPanel.add(FoundButton, BorderLayout.CENTER);
                        FoundButton.addActionListener(new ActionListener() {
                            @Override
                            public void actionPerformed(ActionEvent e) {
+                               String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
+                               try {
+                                   if(DataBaseOperation.CheckFriend(foundUser, currentuser, conn)){
+                                       JOptionPane.showMessageDialog(null, foundUser.Name + " " + foundUser.Lastname + " is already in your friend list");
+                                       return;
+                                   }
+                               } catch (SQLException ex) {
+                                   throw new RuntimeException(ex);
+                               }
+
                                int response = JOptionPane.showConfirmDialog(null, "Do you want to send friend request to: " + foundUser.Name + " " + foundUser.Lastname + "?", "Friend request", JOptionPane.YES_NO_OPTION);
 
                                if(response == JOptionPane.YES_OPTION){
@@ -80,12 +89,9 @@ public class SearchUserForm extends JFrame implements ActionListener{
 //    }
 
     private void createUIComponents() {
-         UsersPanel = new JPanel(new GridBagLayout());
-         UsersPanel.setLayout(new BoxLayout(UsersPanel, BoxLayout.Y_AXIS));
-//        UsersPanel = new JPanel();
-//        UsersPanel.setLayout(new BorderLayout());
-
-     }
+        UsersPanel = new JPanel();
+        UsersPanel.setLayout(new GridLayout(0,1));
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

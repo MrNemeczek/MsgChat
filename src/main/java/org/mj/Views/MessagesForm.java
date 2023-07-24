@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.geom.RoundRectangle2D;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -55,6 +57,16 @@ public class MessagesForm extends JFrame implements ActionListener{
         setFriendsPanel();
         setRequestsPanel();
 
+        JScrollBar scrollBarMessage = MessagesScrollPanel.getVerticalScrollBar();
+        scrollBarMessage.addAdjustmentListener(new AdjustmentListener() {
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                JScrollBar scrollBar = (JScrollBar) e.getSource();
+                if (scrollBar.getValue() == scrollBar.getMinimum()) {
+                    System.out.println("Suwak na samej górze.");
+                }
+            }
+        });
         AddFriendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -94,7 +106,7 @@ public class MessagesForm extends JFrame implements ActionListener{
         for(var friend : friends){
 
             JButton friendButton = MyUI.FlexButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
-            friendButton.setSize(new Dimension(50,50));
+            //friendButton.setSize(new Dimension(50,50));
             FriendsPanel.add(friendButton);
             FriendsPanel.revalidate();
             FriendsPanel.repaint();
@@ -114,6 +126,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                         for(var msg : messages){
 
                             JLabel msgLabel = new JLabel(msg.Content);
+                            msgLabel.setFont(new Font("Arial", Font.PLAIN, 60));
 
                             if(msg.ID_User_Sender == _currentUser.ID_User){
                                 MessagePanel.add(MyUI.placeRight(msgLabel));
@@ -153,8 +166,16 @@ public class MessagesForm extends JFrame implements ActionListener{
                         for (var friendRequest : friendsRequested) {
 
                             JButton requestButton = MyUI.FlexButton(friendRequest.User_Friend.Name + " " + friendRequest.User_Friend.Lastname);
-                            requestButton.setSize(new Dimension(50, 50));
+                            //requestButton.setSize(new Dimension(50, 50));
                             RequestsPanel.add(requestButton);
+//                            GridBagConstraints constraints = new GridBagConstraints();
+//                            constraints.gridx = 0;
+//                            constraints.gridy = 0;
+//
+//                            constraints.ipadx = 100; // szerokość
+//                            constraints.ipady = 50; // wysokość
+//                            constraints.anchor = GridBagConstraints.NORTH;
+//                            RequestsPanel.add(requestButton, constraints);
                             RequestsPanel.revalidate();
                             RequestsPanel.repaint();
 
@@ -197,9 +218,12 @@ public class MessagesForm extends JFrame implements ActionListener{
 
     private void createUIComponents() {
         FriendsPanel = new JPanel();
-        FriendsPanel.setLayout(new BoxLayout(FriendsPanel, BoxLayout.Y_AXIS));
+        //FriendsPanel.setLayout(new BoxLayout(FriendsPanel, BoxLayout.Y_AXIS));
+        FriendsPanel.setLayout(new GridLayout(0, 1));
         RequestsPanel = new JPanel();
-        RequestsPanel.setLayout(new BoxLayout(RequestsPanel, BoxLayout.Y_AXIS));
+        //RequestsPanel.setLayout(new BoxLayout(RequestsPanel, BoxLayout.Y_AXIS));
+        RequestsPanel.setLayout(new GridLayout(0,1));
+        //RequestsPanel.setLayout(new GridBagLayout());
         MessagePanel = new JPanel();
         MessagePanel.setLayout(new BoxLayout(MessagePanel, BoxLayout.Y_AXIS));
     }
@@ -253,6 +277,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                         public void messageArrived(String topic, MqttMessage message) {
                             System.out.println("message content: " + new String(message.getPayload()));
                             JLabel msgLabel = new JLabel(new String(message.getPayload()));
+                            //msgLabel.setFont(new Font("Arial", Font.PLAIN, 40));
 
                             JPanel roundedLabelPanel = new JPanel() {
                                 @Override

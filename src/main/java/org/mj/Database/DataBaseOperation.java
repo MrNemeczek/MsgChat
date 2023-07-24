@@ -153,8 +153,16 @@ public class DataBaseOperation {
      * @return LinkedList<User> uzytkownicy ktorzy pasuje do frazy szukajacej
      * @throws Exception
      */
-    public static LinkedList<User> FindUser(User user, Connection connection) throws Exception{
-        String query = "SELECT id_user, name, lastname FROM user WHERE name LIKE '%" + user.Name + "%' OR lastname LIKE '%" + user.Lastname + "%';";
+    public static LinkedList<User> FindUser(String searchString, Connection connection) throws Exception{
+        String[] splittedText = searchString.split(" ");
+        String query;
+        if(splittedText.length == 1){
+            query = "SELECT id_user, name, lastname FROM user WHERE name LIKE '%" + splittedText[0] + "%' OR lastname LIKE '%" + splittedText[0] + "%';";
+        } else if (splittedText.length == 2) {
+            query = "SELECT id_user, name, lastname FROM user WHERE name LIKE '%" + splittedText[0] + "%' OR lastname LIKE '%" + splittedText[1] + "%';";
+        } else{
+          return null;
+        }
 
         LinkedList<User> users = new LinkedList<>();
         PreparedStatement ps = connection.prepareStatement(query);
@@ -172,7 +180,6 @@ public class DataBaseOperation {
             
         }
         return users;
-
     }
 
     public static boolean FriendRequest (User user, User frienduser, Connection connection) throws SQLException {
@@ -184,7 +191,25 @@ public class DataBaseOperation {
         return true;
     }
 
+    /**
+     * Sprawdza czy juz mamy takiego znajomego
+     * @return
+     */
+    public static boolean CheckFriend(User friend, User user, Connection connection) throws SQLException {
+        String query = "SELECT f.id_friend FROM friend f\n" +
+                "join user u ON u.id_user=f.id_user \n" +
+                "join user uf ON uf.id_user=f.id_user_friend \n" +
+                "WHERE (f.id_user=" + user.ID_User + " OR f.id_user_friend=" + user.ID_User + ") AND (u.lastname='" + friend.Lastname + "' AND u.name='" + friend.Name + "' OR uf.lastname='" + friend.Lastname + "' AND uf.name='" + friend.Name + "');";
 
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        if(!rs.next()){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     public static boolean AcceptFriendRequest(Friend friend, Connection connection) throws SQLException{
         String query = "UPDATE friend SET `accepted` = '1' WHERE (`id_friend`=" + friend.ID_Friend + ");";

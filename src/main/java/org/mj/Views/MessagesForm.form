@@ -22,7 +22,9 @@
         <children>
           <component id="2574" class="javax.swing.JButton" binding="AddFriendButton">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="137" height="30"/>
+              </grid>
             </constraints>
             <properties>
               <background color="-14002901"/>
@@ -32,7 +34,9 @@
           </component>
           <scrollpane id="5023d" binding="FriendsScrollPanel">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="137" height="0"/>
+              </grid>
             </constraints>
             <properties>
               <foreground color="-12274059"/>
@@ -52,7 +56,9 @@
           </scrollpane>
           <scrollpane id="6e83d" binding="RequestsScrollPanel">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="137" height="10"/>
+              </grid>
             </constraints>
             <properties>
               <foreground color="-12274059"/>
@@ -72,7 +78,9 @@
           </scrollpane>
           <component id="2f46b" class="javax.swing.JButton" binding="LogoutButton">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="137" height="30"/>
+              </grid>
             </constraints>
             <properties>
               <background color="-14002901"/>
@@ -82,7 +90,9 @@
           </component>
           <component id="98805" class="javax.swing.JLabel" binding="UserLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="137" height="16"/>
+              </grid>
             </constraints>
             <properties>
               <foreground color="-16777216"/>
