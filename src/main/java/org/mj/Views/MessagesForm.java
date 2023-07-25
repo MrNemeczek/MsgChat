@@ -35,11 +35,16 @@ public class MessagesForm extends JFrame implements ActionListener{
     private JPanel MessagePanel;
     private JButton LogoutButton;
     private JLabel UserLabel;
+    private JScrollBar ScrollBarMessage;
 
     private int ID_texting_friend;
+    private int MsgPage = 1;
     private User _currentUser;
+    private Friend _conversationFriend;
     private Connection _conn;
     private boolean _logged = true;
+    private boolean _firstScrollTop = false;
+    private LinkedList<Message> messages;
 
     public  MessagesForm(JFrame parent, User currentUser, Connection conn) throws SQLException {
         _currentUser = currentUser;
@@ -57,13 +62,41 @@ public class MessagesForm extends JFrame implements ActionListener{
         setFriendsPanel();
         setRequestsPanel();
 
-        JScrollBar scrollBarMessage = MessagesScrollPanel.getVerticalScrollBar();
-        scrollBarMessage.addAdjustmentListener(new AdjustmentListener() {
+        ScrollBarMessage = MessagesScrollPanel.getVerticalScrollBar();
+        ScrollBarMessage.addAdjustmentListener(new AdjustmentListener() {
             @Override
             public void adjustmentValueChanged(AdjustmentEvent e) {
                 JScrollBar scrollBar = (JScrollBar) e.getSource();
-                if (scrollBar.getValue() == scrollBar.getMinimum()) {
+                if (scrollBar.getValue() == scrollBar.getMinimum() && !_firstScrollTop) {
                     System.out.println("Suwak na samej górze.");
+                    scrollBar.setValue(scrollBar.getMaximum());
+                    _firstScrollTop = true;
+                } else if (scrollBar.getValue() == scrollBar.getMinimum()) {
+                    //tu pobieranie kolejnych wiadomosci
+                    scrollBar.setValue(scrollBar.getMinimum() + 10);
+                    try {
+                        int lastIDMsg = Message.LastIndex(messages);
+                        LinkedList<Message> oldMessages = DataBaseOperation.GetOldMessages(_currentUser, _conversationFriend, lastIDMsg, _conn);
+                        for(var msg : oldMessages){
+
+                            JLabel msgLabel = new JLabel(msg.Content);
+                            msgLabel.setFont(new Font("Arial", Font.PLAIN, 60));
+
+                            if(msg.ID_User_Sender == _currentUser.ID_User){
+                                MessagePanel.add(MyUI.placeRight(msgLabel), 0);
+                            }
+                            else{
+                                MessagePanel.add(MyUI.placeLeft(msgLabel), 0);
+                            }
+
+//                            test.add(msgLabel);
+                            MessagePanel.revalidate();
+                            MessagePanel.repaint();
+                        }
+                        messages.addAll(oldMessages);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
@@ -78,15 +111,11 @@ public class MessagesForm extends JFrame implements ActionListener{
         SendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 try {
                     SendMessage();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-
-
             }
         });
 
@@ -114,9 +143,10 @@ public class MessagesForm extends JFrame implements ActionListener{
             friendButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
+                    _conversationFriend = friend;
+                    MsgPage = 1;
                     try {
-                        LinkedList<Message> messages = DataBaseOperation.GetMessages(_currentUser, friend, _conn);
+                        messages = DataBaseOperation.GetMessages(_currentUser, friend, _conn);
                         ID_texting_friend = friend.User_Friend.ID_User;
 
                         MessagePanel.removeAll();
@@ -142,7 +172,7 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                         //uruchomienie subskrybenta tematu
                         ReceiveMessage(ID_texting_friend);
-
+                        _firstScrollTop = false;
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }

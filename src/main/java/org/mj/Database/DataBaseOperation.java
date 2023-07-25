@@ -148,7 +148,7 @@ public class DataBaseOperation {
 
     /**
      * szuka uzytkownik po imieniu i nazwisku
-     * @param user user jakiego chcemy znalesc
+     * @param searchString - string imie lub nazwisko zeby znalezc osobe
      * @param connection
      * @return LinkedList<User> uzytkownicy ktorzy pasuje do frazy szukajacej
      * @throws Exception
@@ -239,6 +239,33 @@ public class DataBaseOperation {
             message.Timestamp = rs.getTimestamp("ts");
 
             messages.add(message);
+        }
+
+        return messages;
+    }
+
+    public static LinkedList<Message> GetOldMessages(User currentUser, Friend friend, int lastIDMsg ,Connection connection) throws SQLException {
+        String queryGetNext10Msgs = "SELECT * FROM message \n" +
+                "WHERE ((id_user_sender=" + currentUser.ID_User + " AND id_user_receiver=" + friend.User_Friend.ID_User + ") OR (id_user_sender=" + friend.User_Friend.ID_User + " AND id_user_receiver=" + currentUser.ID_User + ")) AND id_message < " + lastIDMsg + "\n" +
+                "ORDER BY id_message DESC LIMIT 3;";
+        System.out.println(lastIDMsg);
+
+        LinkedList<Message> messages = new LinkedList<>();
+
+        PreparedStatement ps = connection.prepareStatement(queryGetNext10Msgs);
+        ResultSet rs = ps.executeQuery();
+        int i = 0;
+        while(rs.next()){
+
+            Message message = new Message();
+
+            message.ID_Message = rs.getInt("id_message");
+            message.ID_User_Sender = rs.getInt("id_user_sender");
+            message.Content = rs.getString("content");
+            message.Timestamp = rs.getTimestamp("ts");
+
+            messages.add(message);
+            System.out.println(message.ID_Message + " " + message.Content);
         }
 
         return messages;
