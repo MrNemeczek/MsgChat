@@ -18,7 +18,7 @@ public class MQTTRegistryClientThread extends Thread{
         String topic = "$CONTROL/dynamic-security/v1";
         String username = "test";
         String password = "test";
-        String clientid = "test";
+        String clientid = "newUser";
 
         int qos = 0;
 

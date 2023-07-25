@@ -35,6 +35,7 @@ public class MessagesForm extends JFrame implements ActionListener{
     private JPanel MessagePanel;
     private JButton LogoutButton;
     private JLabel UserLabel;
+    private JLabel ConversationLbl;
     private JScrollBar ScrollBarMessage;
 
     private int ID_texting_friend;
@@ -144,7 +145,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     _conversationFriend = friend;
-                    MsgPage = 1;
+                    ConversationLbl.setText(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
                     try {
                         messages = DataBaseOperation.GetMessages(_currentUser, friend, _conn);
                         ID_texting_friend = friend.User_Friend.ID_User;
@@ -283,7 +284,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                 String topic = "mqtt/"+_currentUser.ID_User+"/"+IDTextingFriend;
                 String username = _currentUser.Name;
                 String password = _currentUser.Password;
-                String clientid = "test2";
+                String clientid = String.valueOf(_currentUser.ID_User);
                 int qos = 0;
 
                 //System.out.println("nasluchiwanie wlaczone dla: " + topic);
@@ -309,26 +310,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                             JLabel msgLabel = new JLabel(new String(message.getPayload()));
                             //msgLabel.setFont(new Font("Arial", Font.PLAIN, 40));
 
-                            JPanel roundedLabelPanel = new JPanel() {
-                                @Override
-                                protected void paintComponent(Graphics g) {
-                                    if (g instanceof Graphics2D) {
-                                        Graphics2D g2d = (Graphics2D) g;
-                                        int arc = 20; // Wielkość zaokrąglenia.
-
-                                        // Rysujemy zaokrąglone tło dla JLabel.
-                                        g2d.setColor(getBackground());
-                                        g2d.fill(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, arc, arc));
-                                    }
-                                }
-                            };
-                            roundedLabelPanel.add(msgLabel);
-                            roundedLabelPanel.setPreferredSize(new Dimension(200, 60));
-                            roundedLabelPanel.setBackground(Color.LIGHT_GRAY);
-
-
-                            //MessagePanel.add(MyUI.placeLeft(msgLabel));
-                            MessagePanel.add(MyUI.placeLeft(roundedLabelPanel));
+                            MessagePanel.add(MyUI.placeLeft(msgLabel));
                             MessagePanel.revalidate();
                             MessagePanel.repaint();
                         }

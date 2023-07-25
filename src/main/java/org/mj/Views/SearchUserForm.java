@@ -32,9 +32,7 @@ public class SearchUserForm extends JFrame implements ActionListener{
            public void actionPerformed(ActionEvent e) {
                UsersPanel.removeAll();
 
-               String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
-
-               Connection conn = DataBaseOperation.ConnectToDB(connectionUrl);
+               Connection conn = DataBaseOperation.ConnectToDB();
                try {
                    LinkedList<User> foundUsers = DataBaseOperation.FindUser(SearchField.getText(), conn);
                    if(foundUsers == null){

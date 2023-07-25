@@ -37,8 +37,7 @@ public class RegisterForm extends JFrame{
                 user.Name = NameField.getText();
                 user.Lastname = LastnameField.getText();
 
-                String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
-                Connection conn = DataBaseOperation.ConnectToDB(connectionUrl);
+                Connection conn = DataBaseOperation.ConnectToDB();
                 //TODO: sprobowac przeniesc try catcha do DataBaseOperation
                 try {
                     if(DataBaseOperation.Registry(user, conn)){

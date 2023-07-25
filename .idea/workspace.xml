@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="MessagesForm and SearchUserForm frontend updated and preliminary changes in scrollbar in MessagesForm">
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="get OldMessage added">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/LoginDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MyUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Models/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
     </list>
     <list id="c9571aa0-ebca-4048-a168-e38d347c46f4" name="Changes by jerem" comment="" />
     <list id="b2da128c-f435-4b7e-9c51-3a7273734cbd" name="Changes by micha" comment="">
@@ -47,30 +52,24 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java">
       <ranges>
-        <range start1="15" end1="16" start2="15" end2="16" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="150" end1="151" start2="150" end2="151" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="224" end1="225" start2="224" end2="226" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="230" end1="231" start2="231" end2="232" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="241" end1="241" start2="242" end2="243" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="245" end1="245" start2="247" end2="274" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="13" end1="14" start2="13" end2="16" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="15" end1="16" start2="17" end2="18" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+        <range start1="35" end1="35" start2="37" end2="43" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="49" end1="50" start2="57" end2="57" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="222" end1="245" start2="229" end2="254" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+        <range start1="249" end1="250" start2="258" end2="259" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+        <range start1="256" end1="257" start2="265" end2="266" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
       </ranges>
     </file>
     <file path="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java">
       <ranges>
         <range start1="12" end1="12" start2="12" end2="13" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
         <range start1="37" end1="37" start2="38" end2="39" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="39" end1="39" start2="41" end2="42" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="40" end1="40" start2="43" end2="44" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="42" end1="42" start2="46" end2="48" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="59" end1="61" start2="65" end2="67" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="64" end1="65" start2="70" end2="71" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="66" end1="66" start2="72" end2="100" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="80" end1="82" start2="114" end2="114" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="87" end1="89" start2="119" end2="119" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="116" end1="117" start2="146" end2="148" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="118" end1="119" start2="149" end2="150" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="124" end1="125" start2="155" end2="156" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="144" end1="145" start2="175" end2="176" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="146" end1="147" start2="148" end2="149" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="148" end1="149" start2="150" end2="151" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+        <range start1="154" end1="155" start2="156" end2="157" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+        <range start1="285" end1="286" start2="287" end2="288" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="311" end1="331" start2="313" end2="314" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
       </ranges>
     </file>
   </component>
@@ -298,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690228846676</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="get OldMessage added">
+      <created>1690310444693</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1690310444693</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -330,6 +336,7 @@
     <MESSAGE value="register bug fixed" />
     <MESSAGE value="messageform frontend update" />
     <MESSAGE value="MessagesForm and SearchUserForm frontend updated and preliminary changes in scrollbar in MessagesForm" />
-    <option name="LAST_COMMIT_MESSAGE" value="MessagesForm and SearchUserForm frontend updated and preliminary changes in scrollbar in MessagesForm" />
+    <MESSAGE value="get OldMessage added" />
+    <option name="LAST_COMMIT_MESSAGE" value="get OldMessage added" />
   </component>
 </project>

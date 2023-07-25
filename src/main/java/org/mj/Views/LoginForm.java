@@ -7,6 +7,10 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.mj.Database.*;
 import org.mj.Models.Friend;
@@ -32,9 +36,8 @@ public class LoginForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String login = LoginField.getText();
                 String password = String.valueOf(PasswordField.getPassword());
-                String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
 
-                Connection conn = DataBaseOperation.ConnectToDB(connectionUrl);
+                Connection conn = DataBaseOperation.ConnectToDB();
                 //TODO: sprobowac przeniesc try catcha do DataBaseOperation
                 try {
                     User user = DataBaseOperation.Login(login, password, conn);
@@ -48,9 +51,28 @@ public class LoginForm extends JFrame{
                         JOptionPane.showMessageDialog(null, "Incorrect login or password!");
                     }
 
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+
+//                ExecutorService executorService = Executors.newSingleThreadExecutor();
+//                Future<User> future = executorService.submit(new LoginDB(login, password, conn));
+//                try {
+//                    User user = future.get();
+//                    if (user != null) {
+//                        MessagesForm msgForm = new MessagesForm (null , user , conn);
+//
+//                        dispose();
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Incorrect login or password!");
+//                    }
+//                } catch (InterruptedException | ExecutionException ex) {
+//                    ex.printStackTrace();
+//                } catch (SQLException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+
             }
         });
         RegisterButton.addActionListener(new ActionListener() {

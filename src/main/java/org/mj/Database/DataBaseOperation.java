@@ -11,7 +11,9 @@ public class DataBaseOperation {
      * @param connectionURL adres URL do bazy danych
      * @return Connection jesli nie udalo sie polaczyc zwraca null
      */
-    public static Connection ConnectToDB(String connectionURL){
+    public static Connection ConnectToDB(){
+        String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
+
         try {
             Connection conn = DriverManager.getConnection(connectionURL, "adminansb", "Bolekkrul1!");
             return conn;
@@ -47,7 +49,6 @@ public class DataBaseOperation {
 
             return user;
         }
-        //TODO: zrobic zeby zwracalo User i jesli fail logowanie to null
         return null;
     }
 

@@ -24,7 +24,7 @@ public class MQTTClientThread extends Thread{
         String topic = "mqtt/"+_IDTextingFriend+"/"+_currentUser.ID_User;
         String username = _currentUser.Name;
         String password = _currentUser.Password;
-        String clientid = "test3";
+        String clientid = String.valueOf(_currentUser.ID_User);
 
         int qos = 0;
 
