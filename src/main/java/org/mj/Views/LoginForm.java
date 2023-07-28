@@ -4,17 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
-import org.mj.Database.*;
-import org.mj.Models.Friend;
-import org.mj.Models.User;
+import org.mj.Threads.LoginThread;
 
 public class LoginForm extends JFrame{
     private JPanel MainPanel;
@@ -30,6 +21,7 @@ public class LoginForm extends JFrame{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+        JFrame form = this;
 
         LoginButton.addActionListener(new ActionListener() {
             @Override
@@ -37,42 +29,8 @@ public class LoginForm extends JFrame{
                 String login = LoginField.getText();
                 String password = String.valueOf(PasswordField.getPassword());
 
-                Connection conn = DataBaseOperation.ConnectToDB();
-                //TODO: sprobowac przeniesc try catcha do DataBaseOperation
-                try {
-                    User user = DataBaseOperation.Login(login, password, conn);
-
-                    if(user != null){
-                        MessagesForm msgForm = new MessagesForm (null /*friends*/, user /*friendsRequested*/, conn);
-
-                        dispose();
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Incorrect login or password!");
-                    }
-
-
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-//                ExecutorService executorService = Executors.newSingleThreadExecutor();
-//                Future<User> future = executorService.submit(new LoginDB(login, password, conn));
-//                try {
-//                    User user = future.get();
-//                    if (user != null) {
-//                        MessagesForm msgForm = new MessagesForm (null , user , conn);
-//
-//                        dispose();
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Incorrect login or password!");
-//                    }
-//                } catch (InterruptedException | ExecutionException ex) {
-//                    ex.printStackTrace();
-//                } catch (SQLException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-
+                LoginThread loginThread = new LoginThread(form, login, password);
+                loginThread.start();
             }
         });
         RegisterButton.addActionListener(new ActionListener() {

@@ -3,6 +3,7 @@ package org.mj.Views;
 import org.mj.Database.DataBaseOperation;
 import org.mj.Functions.MyUI;
 import org.mj.Models.User;
+import org.mj.Threads.FindUsersThread;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +16,9 @@ import java.util.LinkedList;
 public class SearchUserForm extends JFrame implements ActionListener{
     private JTextField SearchField;
     private JPanel MainPanel;
-    private JPanel UsersPanel;
+    public JPanel UsersPanel;
     private JButton SearchButton;
+    public User currentUser;
 
     public SearchUserForm(JFrame parent, User currentuser){
         setTitle("Search");
@@ -25,67 +27,18 @@ public class SearchUserForm extends JFrame implements ActionListener{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-
+        SearchUserForm form = this;
+        currentUser = currentuser;
 
        SearchButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               UsersPanel.removeAll();
-
-               Connection conn = DataBaseOperation.ConnectToDB();
-               try {
-                   LinkedList<User> foundUsers = DataBaseOperation.FindUser(SearchField.getText(), conn);
-                   if(foundUsers == null){
-                       JOptionPane.showMessageDialog(null, "No user found");
-                       return;
-                   }
-                   for(var foundUser : foundUsers){
-                       //JButton FoundButton = new JButton(foundUser.Name + " " + foundUser.Lastname);
-                       JButton FoundButton = MyUI.FlexButton(foundUser.Name + " " + foundUser.Lastname);
-//                       FoundButton.setSize(new Dimension(150,150));
-                       //System.out.println("wysokosc: " + UsersPanel.getHeight() + " Szerokosc:" + UsersPanel.getWidth());
-
-                       //UsersPanel.add(FoundButton);
-                       UsersPanel.add(FoundButton, BorderLayout.CENTER);
-                       //UsersPanel.add(FoundButton, BorderLayout.CENTER);
-                       FoundButton.addActionListener(new ActionListener() {
-                           @Override
-                           public void actionPerformed(ActionEvent e) {
-                               String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
-                               try {
-                                   if(DataBaseOperation.CheckFriend(foundUser, currentuser, conn)){
-                                       JOptionPane.showMessageDialog(null, foundUser.Name + " " + foundUser.Lastname + " is already in your friend list");
-                                       return;
-                                   }
-                               } catch (SQLException ex) {
-                                   throw new RuntimeException(ex);
-                               }
-
-                               int response = JOptionPane.showConfirmDialog(null, "Do you want to send friend request to: " + foundUser.Name + " " + foundUser.Lastname + "?", "Friend request", JOptionPane.YES_NO_OPTION);
-
-                               if(response == JOptionPane.YES_OPTION){
-                                   try {
-                                       DataBaseOperation.FriendRequest( currentuser,foundUser, conn );
-                                   } catch (SQLException ex) {
-                                       throw new RuntimeException(ex);
-                                   }
-                               }
-                           }
-                       });
-
-                   }
-
-                   setVisible(true);
-               } catch (Exception ex) {
-                   throw new RuntimeException(ex);
-               }
+               FindUsersThread findUsersThread = new FindUsersThread(form, SearchField.getText());
+               findUsersThread.start();
            }
        });
 
 }
-//    public static void main(String[] args) { SearchUserForm searchUserForm = new SearchUserForm(null,);
-//    }
-
     private void createUIComponents() {
         UsersPanel = new JPanel();
         UsersPanel.setLayout(new GridLayout(0,1));

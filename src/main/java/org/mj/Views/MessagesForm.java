@@ -21,6 +21,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.mj.Database.*;
 import org.mj.Models.*;
 import org.mj.Functions.*;
+import org.mj.Threads.GetMessagesThread;
 
 public class MessagesForm extends JFrame implements ActionListener{
     private JButton AddFriendButton;
@@ -32,20 +33,22 @@ public class MessagesForm extends JFrame implements ActionListener{
     private JScrollPane FriendsScrollPanel;
     private JScrollPane RequestsScrollPanel;
     private JPanel RequestsPanel;
-    private JPanel MessagePanel;
+    public JPanel MessagePanel;
     private JButton LogoutButton;
     private JLabel UserLabel;
     private JLabel ConversationLbl;
     private JScrollBar ScrollBarMessage;
 
-    private int ID_texting_friend;
+    public int ID_texting_friend;
     private int MsgPage = 1;
-    private User _currentUser;
+    public User _currentUser;
     private Friend _conversationFriend;
-    private Connection _conn;
+    public Connection _conn;
     private boolean _logged = true;
-    private boolean _firstScrollTop = false;
-    private LinkedList<Message> messages;
+    public boolean _firstScrollTop = false;
+    public boolean msgsLoaded = false;
+    public LinkedList<Message> messages;
+    private MessagesForm _form;
 
     public  MessagesForm(JFrame parent, User currentUser, Connection conn) throws SQLException {
         _currentUser = currentUser;
@@ -57,6 +60,7 @@ public class MessagesForm extends JFrame implements ActionListener{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+        _form = this;
 
         UserLabel.setText(currentUser.Name + " " + currentUser.Lastname);
 
@@ -72,7 +76,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                     System.out.println("Suwak na samej górze.");
                     scrollBar.setValue(scrollBar.getMaximum());
                     _firstScrollTop = true;
-                } else if (scrollBar.getValue() == scrollBar.getMinimum()) {
+                } else if (scrollBar.getValue() == scrollBar.getMinimum() && msgsLoaded) {
                     //tu pobieranie kolejnych wiadomosci
                     scrollBar.setValue(scrollBar.getMinimum() + 10);
                     try {
@@ -146,37 +150,39 @@ public class MessagesForm extends JFrame implements ActionListener{
                 public void actionPerformed(ActionEvent e) {
                     _conversationFriend = friend;
                     ConversationLbl.setText(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
-                    try {
-                        messages = DataBaseOperation.GetMessages(_currentUser, friend, _conn);
-                        ID_texting_friend = friend.User_Friend.ID_User;
-
-                        MessagePanel.removeAll();
-                        MessagePanel.revalidate();
-                        MessagePanel.repaint();
-
-                        for(var msg : messages){
-
-                            JLabel msgLabel = new JLabel(msg.Content);
-                            msgLabel.setFont(new Font("Arial", Font.PLAIN, 60));
-
-                            if(msg.ID_User_Sender == _currentUser.ID_User){
-                                MessagePanel.add(MyUI.placeRight(msgLabel));
-                            }
-                            else{
-                                MessagePanel.add(MyUI.placeLeft(msgLabel));
-                            }
-
-//                            test.add(msgLabel);
-                            MessagePanel.revalidate();
-                            MessagePanel.repaint();
-                        }
-
-                        //uruchomienie subskrybenta tematu
-                        ReceiveMessage(ID_texting_friend);
-                        _firstScrollTop = false;
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    GetMessagesThread getMessagesThread = new GetMessagesThread(_form, friend);
+                    getMessagesThread.start();
+//                    try {
+//                        messages = DataBaseOperation.GetOldMessages(_currentUser, friend, Integer.MAX_VALUE, _conn);
+//                        ID_texting_friend = friend.User_Friend.ID_User;
+//
+//                        MessagePanel.removeAll();
+//                        MessagePanel.revalidate();
+//                        MessagePanel.repaint();
+//                        Collections.reverse(messages);
+//                        for(var msg : messages){
+//
+//                            JLabel msgLabel = new JLabel(msg.Content);
+//                            msgLabel.setFont(new Font("Arial", Font.PLAIN, 60));
+//
+//                            if(msg.ID_User_Sender == _currentUser.ID_User){
+//                                MessagePanel.add(MyUI.placeRight(msgLabel));
+//                            }
+//                            else{
+//                                MessagePanel.add(MyUI.placeLeft(msgLabel));
+//                            }
+//
+////                            test.add(msgLabel);
+//                            MessagePanel.revalidate();
+//                            MessagePanel.repaint();
+//                        }
+//
+//                        //uruchomienie subskrybenta tematu
+//                        ReceiveMessage(ID_texting_friend);
+//                        _firstScrollTop = false;
+//                    } catch (SQLException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
 
                 }
             });
@@ -275,7 +281,7 @@ public class MessagesForm extends JFrame implements ActionListener{
         MessageField.setText("");
     }
 
-    private void ReceiveMessage(int IDTextingFriend){
+    public void ReceiveMessage(int IDTextingFriend){
         class MyThread extends Thread{
             public void run(){
 

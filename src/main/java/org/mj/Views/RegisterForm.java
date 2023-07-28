@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import org.mj.Functions.MQTTRegistryClientThread;
 import org.mj.Models.*;
 import org.mj.Database.*;
+import org.mj.Threads.RegisterThread;
 
 public class RegisterForm extends JFrame{
     private JTextField NameField;
@@ -27,6 +28,7 @@ public class RegisterForm extends JFrame{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+        JFrame form = this;
         RegistryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,22 +39,8 @@ public class RegisterForm extends JFrame{
                 user.Name = NameField.getText();
                 user.Lastname = LastnameField.getText();
 
-                Connection conn = DataBaseOperation.ConnectToDB();
-                //TODO: sprobowac przeniesc try catcha do DataBaseOperation
-                try {
-                    if(DataBaseOperation.Registry(user, conn)){
-                        MQTTRegistryClientThread registryClientThread = new MQTTRegistryClientThread(user);
-                        registryClientThread.start();
-                        JOptionPane.showMessageDialog(null, "Account created");
-                        LoginForm loginForm = new LoginForm(null);
-                        dispose();
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "There is already an account with this login");
-                    }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                RegisterThread registerThread = new RegisterThread(form, user);
+                registerThread.start();
             }
         });
         LoginButton.addActionListener(new ActionListener() {

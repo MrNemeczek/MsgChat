@@ -4,14 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="get OldMessage added">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/LoginDB.java" afterDir="false" />
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="Jira tasks completed: 18, 34, 25">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/FindUsersThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/LoginThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/RegisterThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/LoginDB.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
@@ -50,26 +51,19 @@
     </option>
   </component>
   <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java">
-      <ranges>
-        <range start1="13" end1="14" start2="13" end2="16" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="15" end1="16" start2="17" end2="18" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="35" end1="35" start2="37" end2="43" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="49" end1="50" start2="57" end2="57" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="222" end1="245" start2="229" end2="254" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="249" end1="250" start2="258" end2="259" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="256" end1="257" start2="265" end2="266" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-      </ranges>
-    </file>
     <file path="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java">
       <ranges>
         <range start1="12" end1="12" start2="12" end2="13" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="37" end1="37" start2="38" end2="39" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="146" end1="147" start2="148" end2="149" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="148" end1="149" start2="150" end2="151" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="154" end1="155" start2="156" end2="157" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="285" end1="286" start2="287" end2="288" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="311" end1="331" start2="313" end2="314" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="23" end1="23" start2="24" end2="25" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="34" end1="35" start2="36" end2="37" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="40" end1="41" start2="42" end2="43" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="42" end1="43" start2="44" end2="45" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="44" end1="45" start2="46" end2="47" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="46" end1="48" start2="48" end2="52" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="59" end1="59" start2="63" end2="64" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="74" end1="75" start2="79" end2="80" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="148" end1="179" start2="153" end2="186" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="277" end1="278" start2="284" end2="285" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
       </ranges>
     </file>
   </component>
@@ -304,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690310444693</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Jira tasks completed: 18, 34, 25">
+      <created>1690316925989</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1690316925989</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -337,6 +338,7 @@
     <MESSAGE value="messageform frontend update" />
     <MESSAGE value="MessagesForm and SearchUserForm frontend updated and preliminary changes in scrollbar in MessagesForm" />
     <MESSAGE value="get OldMessage added" />
-    <option name="LAST_COMMIT_MESSAGE" value="get OldMessage added" />
+    <MESSAGE value="Jira tasks completed: 18, 34, 25" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jira tasks completed: 18, 34, 25" />
   </component>
 </project>

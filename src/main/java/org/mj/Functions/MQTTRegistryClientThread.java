@@ -16,8 +16,8 @@ public class MQTTRegistryClientThread extends Thread{
     public void run(){
         String broker = "tcp://40.115.61.160:1883";
         String topic = "$CONTROL/dynamic-security/v1";
-        String username = "test";
-        String password = "test";
+        String username = "admin";
+        String password = "admin";
         String clientid = "newUser";
 
         int qos = 0;
