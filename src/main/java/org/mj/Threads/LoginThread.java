@@ -2,6 +2,7 @@ package org.mj.Threads;
 
 import org.mj.Database.DataBaseOperation;
 import org.mj.Models.User;
+import org.mj.Views.LoginForm;
 import org.mj.Views.MessagesForm;
 
 import javax.swing.*;
@@ -9,10 +10,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class LoginThread extends Thread{
-    private JFrame _form;
+    private LoginForm _form;
     private String _login;
     private String _password;
-    public LoginThread(JFrame form, String login, String password){
+    public LoginThread(LoginForm form, String login, String password){
         _form = form;
         _login = login;
         _password = password;
@@ -30,6 +31,7 @@ public class LoginThread extends Thread{
             }
             else{
                 JOptionPane.showMessageDialog(null, "Incorrect login or password!");
+                _form.LoginButton.setEnabled(true);
             }
 
 

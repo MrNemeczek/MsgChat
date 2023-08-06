@@ -22,6 +22,7 @@ import org.mj.Database.*;
 import org.mj.Models.*;
 import org.mj.Functions.*;
 import org.mj.Threads.GetMessagesThread;
+import org.mj.Threads.SendMessageThread;
 
 public class MessagesForm extends JFrame implements ActionListener{
     private JButton AddFriendButton;
@@ -37,7 +38,7 @@ public class MessagesForm extends JFrame implements ActionListener{
     private JButton LogoutButton;
     private JLabel UserLabel;
     private JLabel ConversationLbl;
-    private JScrollBar ScrollBarMessage;
+    public JScrollBar ScrollBarMessage;
 
     public int ID_texting_friend;
     private int MsgPage = 1;
@@ -49,6 +50,7 @@ public class MessagesForm extends JFrame implements ActionListener{
     public boolean msgsLoaded = false;
     public LinkedList<Message> messages;
     private MessagesForm _form;
+    private boolean allMsgsDownloaded = false;
 
     public  MessagesForm(JFrame parent, User currentUser, Connection conn) throws SQLException {
         _currentUser = currentUser;
@@ -72,16 +74,16 @@ public class MessagesForm extends JFrame implements ActionListener{
             @Override
             public void adjustmentValueChanged(AdjustmentEvent e) {
                 JScrollBar scrollBar = (JScrollBar) e.getSource();
-                if (scrollBar.getValue() == scrollBar.getMinimum() && !_firstScrollTop) {
-                    System.out.println("Suwak na samej górze.");
-                    scrollBar.setValue(scrollBar.getMaximum());
-                    _firstScrollTop = true;
-                } else if (scrollBar.getValue() == scrollBar.getMinimum() && msgsLoaded) {
+
+                if (scrollBar.getValue() == scrollBar.getMinimum() && msgsLoaded && !allMsgsDownloaded) {
                     //tu pobieranie kolejnych wiadomosci
                     scrollBar.setValue(scrollBar.getMinimum() + 10);
                     try {
                         int lastIDMsg = Message.LastIndex(messages);
                         LinkedList<Message> oldMessages = DataBaseOperation.GetOldMessages(_currentUser, _conversationFriend, lastIDMsg, _conn);
+                        if(oldMessages.size() == 0){
+                            allMsgsDownloaded = true;
+                        }
                         for(var msg : oldMessages){
 
                             JLabel msgLabel = new JLabel(msg.Content);
@@ -93,8 +95,6 @@ public class MessagesForm extends JFrame implements ActionListener{
                             else{
                                 MessagePanel.add(MyUI.placeLeft(msgLabel), 0);
                             }
-
-//                            test.add(msgLabel);
                             MessagePanel.revalidate();
                             MessagePanel.repaint();
                         }
@@ -118,7 +118,7 @@ public class MessagesForm extends JFrame implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 try {
                     SendMessage();
-                } catch (SQLException ex) {
+                } catch (SQLException | InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -152,38 +152,6 @@ public class MessagesForm extends JFrame implements ActionListener{
                     ConversationLbl.setText(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
                     GetMessagesThread getMessagesThread = new GetMessagesThread(_form, friend);
                     getMessagesThread.start();
-//                    try {
-//                        messages = DataBaseOperation.GetOldMessages(_currentUser, friend, Integer.MAX_VALUE, _conn);
-//                        ID_texting_friend = friend.User_Friend.ID_User;
-//
-//                        MessagePanel.removeAll();
-//                        MessagePanel.revalidate();
-//                        MessagePanel.repaint();
-//                        Collections.reverse(messages);
-//                        for(var msg : messages){
-//
-//                            JLabel msgLabel = new JLabel(msg.Content);
-//                            msgLabel.setFont(new Font("Arial", Font.PLAIN, 60));
-//
-//                            if(msg.ID_User_Sender == _currentUser.ID_User){
-//                                MessagePanel.add(MyUI.placeRight(msgLabel));
-//                            }
-//                            else{
-//                                MessagePanel.add(MyUI.placeLeft(msgLabel));
-//                            }
-//
-////                            test.add(msgLabel);
-//                            MessagePanel.revalidate();
-//                            MessagePanel.repaint();
-//                        }
-//
-//                        //uruchomienie subskrybenta tematu
-//                        ReceiveMessage(ID_texting_friend);
-//                        _firstScrollTop = false;
-//                    } catch (SQLException ex) {
-//                        throw new RuntimeException(ex);
-//                    }
-
                 }
             });
 
@@ -265,10 +233,10 @@ public class MessagesForm extends JFrame implements ActionListener{
         MessagePanel.setLayout(new BoxLayout(MessagePanel, BoxLayout.Y_AXIS));
     }
 
-    private void SendMessage() throws SQLException {
+    private void SendMessage() throws SQLException, InterruptedException {
         String content = MessageField.getText();
-
-        DataBaseOperation.SendMessage(_currentUser, ID_texting_friend, content, _conn);
+        SendMessageThread sendMessageThread = new SendMessageThread(_currentUser, ID_texting_friend, content, _conn);
+        sendMessageThread.start();
 
         JLabel msgLabel = new JLabel(content);
         MessagePanel.add(MyUI.placeRight(msgLabel));

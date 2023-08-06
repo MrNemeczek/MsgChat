@@ -10,6 +10,9 @@ public class Message {
     public java.sql.Timestamp Timestamp;
 
     public static int LastIndex(LinkedList<Message> messageList){
+        if(messageList == null){
+            return Integer.MAX_VALUE;
+        }
         int minID = Integer.MAX_VALUE;
 
         for (Message message : messageList) {

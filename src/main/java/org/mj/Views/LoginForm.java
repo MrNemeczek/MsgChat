@@ -11,7 +11,7 @@ public class LoginForm extends JFrame{
     private JPanel MainPanel;
     private JTextField LoginField;
     private JPasswordField PasswordField;
-    private JButton LoginButton;
+    public JButton LoginButton;
     private JButton RegisterButton;
 
     public  LoginForm(JFrame parent){
@@ -21,11 +21,12 @@ public class LoginForm extends JFrame{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-        JFrame form = this;
+        LoginForm form = this;
 
         LoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                LoginButton.setEnabled(false);
                 String login = LoginField.getText();
                 String password = String.valueOf(PasswordField.getPassword());
 
@@ -36,6 +37,7 @@ public class LoginForm extends JFrame{
         RegisterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                RegisterButton.setEnabled(false);
                 RegisterForm registerForm = new RegisterForm(null);
                 dispose();
             }

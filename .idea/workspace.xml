@@ -4,18 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="Jira tasks completed: 18, 34, 25">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/FindUsersThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/LoginThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/RegisterThread.java" afterDir="false" />
+    <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="Scrolling fixed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/SendMessageThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/LoginDB.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Models/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/LoginThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/LoginThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
     </list>
     <list id="c9571aa0-ebca-4048-a168-e38d347c46f4" name="Changes by jerem" comment="" />
     <list id="b2da128c-f435-4b7e-9c51-3a7273734cbd" name="Changes by micha" comment="">
@@ -51,19 +48,28 @@
     </option>
   </component>
   <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java">
+      <ranges>
+        <range start1="10" end1="11" start2="10" end2="10" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="17" end1="18" start2="16" end2="17" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+        <range start1="223" end1="246" start2="222" end2="247" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+        <range start1="250" end1="251" start2="251" end2="252" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+        <range start1="257" end1="258" start2="258" end2="259" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
+      </ranges>
+    </file>
     <file path="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java">
       <ranges>
         <range start1="12" end1="12" start2="12" end2="13" changelist="b2da128c-f435-4b7e-9c51-3a7273734cbd" />
-        <range start1="23" end1="23" start2="24" end2="25" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="34" end1="35" start2="36" end2="37" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="40" end1="41" start2="42" end2="43" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="42" end1="43" start2="44" end2="45" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="44" end1="45" start2="46" end2="47" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="46" end1="48" start2="48" end2="52" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="59" end1="59" start2="63" end2="64" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="74" end1="75" start2="79" end2="80" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="148" end1="179" start2="153" end2="186" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
-        <range start1="277" end1="278" start2="284" end2="285" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="24" end1="24" start2="25" end2="26" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="39" end1="40" start2="41" end2="42" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="51" end1="51" start2="53" end2="54" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="74" end1="79" start2="77" end2="79" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="84" end1="84" start2="84" end2="87" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="95" end1="97" start2="98" end2="98" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="120" end1="121" start2="121" end2="122" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="154" end1="186" start2="155" end2="155" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="267" end1="268" start2="236" end2="237" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="269" end1="271" start2="238" end2="240" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
       </ranges>
     </file>
   </component>
@@ -305,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690316925989</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Threads added">
+      <created>1690581206679</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1690581206679</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,6 +352,8 @@
     <MESSAGE value="MessagesForm and SearchUserForm frontend updated and preliminary changes in scrollbar in MessagesForm" />
     <MESSAGE value="get OldMessage added" />
     <MESSAGE value="Jira tasks completed: 18, 34, 25" />
-    <option name="LAST_COMMIT_MESSAGE" value="Jira tasks completed: 18, 34, 25" />
+    <MESSAGE value="Threads added" />
+    <MESSAGE value="Scrolling fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Scrolling fixed" />
   </component>
 </project>
