@@ -23,6 +23,7 @@ import org.mj.Database.*;
 import org.mj.Models.*;
 import org.mj.Functions.*;
 import org.mj.Threads.GetMessagesThread;
+import org.mj.Threads.GetOldMessages;
 import org.mj.Threads.SendMessageThread;
 
 public class MessagesForm extends JFrame implements ActionListener{
@@ -44,14 +45,14 @@ public class MessagesForm extends JFrame implements ActionListener{
     public int ID_texting_friend;
     private int MsgPage = 1;
     public User _currentUser;
-    private Friend _conversationFriend;
+    public Friend _conversationFriend;
     public Connection _conn;
     private boolean _logged = true;
     public boolean _firstScrollTop = false;
     public boolean msgsLoaded = false;
     public LinkedList<Message> messages;
     private MessagesForm _form;
-    private boolean allMsgsDownloaded = false;
+    public boolean allMsgsDownloaded = false;
 
     public  MessagesForm(JFrame parent, User currentUser, Connection conn) throws SQLException {
         _currentUser = currentUser;
@@ -75,34 +76,12 @@ public class MessagesForm extends JFrame implements ActionListener{
             @Override
             public void adjustmentValueChanged(AdjustmentEvent e) {
                 JScrollBar scrollBar = (JScrollBar) e.getSource();
-
+//tu pobieranie kolejnych wiadomosci przy dojechaniu do gory scrollem
                 if (scrollBar.getValue() == scrollBar.getMinimum() && msgsLoaded && !allMsgsDownloaded) {
-                    //tu pobieranie kolejnych wiadomosci
-                    scrollBar.setValue(scrollBar.getMinimum() + 10);
-                    try {
-                        int lastIDMsg = Message.LastIndex(messages);
-                        LinkedList<Message> oldMessages = DataBaseOperation.GetOldMessages(_currentUser, _conversationFriend, lastIDMsg, _conn);
-                        if(oldMessages.size() == 0){
-                            allMsgsDownloaded = true;
-                        }
-                        for(var msg : oldMessages){
+                    scrollBar.setValue(scrollBar.getMinimum() + 20);
 
-                            JLabel msgLabel = new JLabel(msg.Content);
-                            msgLabel.setFont(new Font("Arial", Font.PLAIN, 60));
-
-                            if(msg.ID_User_Sender == _currentUser.ID_User){
-                                MessagePanel.add(MyUI.placeRight(msgLabel), 0);
-                            }
-                            else{
-                                MessagePanel.add(MyUI.placeLeft(msgLabel), 0);
-                            }
-                            MessagePanel.revalidate();
-                            MessagePanel.repaint();
-                        }
-                        messages.addAll(oldMessages);
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    GetOldMessages getOldMessages = new GetOldMessages(_form);
+                    getOldMessages.start();
                 }
             }
         });
@@ -110,7 +89,6 @@ public class MessagesForm extends JFrame implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 SearchUserForm searchUserForm = new SearchUserForm(null, currentUser);
-
             }
         });
 
@@ -141,7 +119,6 @@ public class MessagesForm extends JFrame implements ActionListener{
         for(var friend : friends){
 
             JButton friendButton = MyUI.FlexButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
-            //friendButton.setSize(new Dimension(50,50));
             FriendsPanel.add(friendButton);
             FriendsPanel.revalidate();
             FriendsPanel.repaint();
@@ -172,16 +149,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                         for (var friendRequest : friendsRequested) {
 
                             JButton requestButton = MyUI.FlexButton(friendRequest.User_Friend.Name + " " + friendRequest.User_Friend.Lastname);
-                            //requestButton.setSize(new Dimension(50, 50));
                             RequestsPanel.add(requestButton);
-//                            GridBagConstraints constraints = new GridBagConstraints();
-//                            constraints.gridx = 0;
-//                            constraints.gridy = 0;
-//
-//                            constraints.ipadx = 100; // szerokość
-//                            constraints.ipady = 50; // wysokość
-//                            constraints.anchor = GridBagConstraints.NORTH;
-//                            RequestsPanel.add(requestButton, constraints);
                             RequestsPanel.revalidate();
                             RequestsPanel.repaint();
 
@@ -221,19 +189,6 @@ public class MessagesForm extends JFrame implements ActionListener{
         t1.start();
 
     }
-
-    private void createUIComponents() {
-        FriendsPanel = new JPanel();
-        //FriendsPanel.setLayout(new BoxLayout(FriendsPanel, BoxLayout.Y_AXIS));
-        FriendsPanel.setLayout(new GridLayout(0, 1));
-        RequestsPanel = new JPanel();
-        //RequestsPanel.setLayout(new BoxLayout(RequestsPanel, BoxLayout.Y_AXIS));
-        RequestsPanel.setLayout(new GridLayout(0,1));
-        //RequestsPanel.setLayout(new GridBagLayout());
-        MessagePanel = new JPanel();
-        MessagePanel.setLayout(new BoxLayout(MessagePanel, BoxLayout.Y_AXIS));
-    }
-
     private void SendMessage() throws SQLException, InterruptedException {
         String content = MessageField.getText();
         SendMessageThread sendMessageThread = new SendMessageThread(_currentUser, ID_texting_friend, content, _conn);
@@ -306,6 +261,16 @@ public class MessagesForm extends JFrame implements ActionListener{
         MyThread t = new MyThread();
         t.start();
 
+    }
+    private void createUIComponents() {
+        FriendsPanel = new JPanel();
+        FriendsPanel.setLayout(new BoxLayout(FriendsPanel, BoxLayout.Y_AXIS));
+
+        RequestsPanel = new JPanel();
+        RequestsPanel.setLayout(new BoxLayout(RequestsPanel, BoxLayout.Y_AXIS));
+
+        MessagePanel = new JPanel();
+        MessagePanel.setLayout(new BoxLayout(MessagePanel, BoxLayout.Y_AXIS));
     }
     @Override
     public void actionPerformed(ActionEvent e) {

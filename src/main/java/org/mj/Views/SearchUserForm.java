@@ -41,7 +41,8 @@ public class SearchUserForm extends JFrame implements ActionListener{
 }
     private void createUIComponents() {
         UsersPanel = new JPanel();
-        UsersPanel.setLayout(new GridLayout(0,1));
+        //UsersPanel.setLayout(new GridLayout(0,1));
+        UsersPanel.setLayout(new BoxLayout(UsersPanel, BoxLayout.Y_AXIS));
     }
 
     @Override

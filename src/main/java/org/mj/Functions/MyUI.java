@@ -30,6 +30,7 @@ public class MyUI {
         Button.setBackground(new Color(42,85,43));
         //white
         Button.setForeground(new Color(255,255,255));
+        Button.setMaximumSize(new Dimension(Short.MAX_VALUE, 30));
 
         return Button;
     }
