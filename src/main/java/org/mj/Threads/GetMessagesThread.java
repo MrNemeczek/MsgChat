@@ -23,10 +23,14 @@ public class GetMessagesThread extends Thread{
         _form.msgsLoaded = false;
 
         try {
-            while(!_form.ScrollBarMessage.isVisible()) {
+            do {
                 int lastIDMsg = Message.LastIndex(_form.messages);
                 _form.messages = DataBaseOperation.GetOldMessages(_form._currentUser, _friend, lastIDMsg, _form._conn);
                 _form.ID_texting_friend = _friend.User_Friend.ID_User;
+
+                if(_form.messages == null || _form.messages.size() == 0){
+                    break;
+                }
 
                 _form.MessagePanel.removeAll();
                 _form.MessagePanel.revalidate();
@@ -46,7 +50,8 @@ public class GetMessagesThread extends Thread{
                     _form.MessagePanel.repaint();
                     Thread.sleep(10);//musi byc zeby dzialalo poprawnie
                 }
-            }
+            }while (!_form.ScrollBarMessage.isVisible());
+
             _form.ScrollBarMessage.setValue(_form.ScrollBarMessage.getMaximum());
             //uruchomienie subskrybenta tematu
             _form.ReceiveMessage(_form.ID_texting_friend);

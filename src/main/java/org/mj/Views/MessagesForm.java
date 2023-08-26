@@ -128,6 +128,19 @@ public class MessagesForm extends JFrame implements ActionListener{
                 public void actionPerformed(ActionEvent e) {
                     _conversationFriend = friend;
                     ConversationLbl.setText(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
+
+                    //usuwanie rzeczy
+                    MessagePanel.removeAll();
+                    MessagePanel.revalidate();
+                    MessagePanel.repaint();
+
+                    if(messages != null){
+                        messages.clear();
+                    }
+
+                    allMsgsDownloaded = false;
+                    //###########################
+
                     GetMessagesThread getMessagesThread = new GetMessagesThread(_form, friend);
                     getMessagesThread.start();
                 }
@@ -177,7 +190,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                         }
                         System.out.println("Zapytano o zaproszenia");
                         //setFriendsPanel();
-                        //TODO: zmniejszyc czas
+                        //TODO: zwiekszyc czas
                         Thread.sleep(5000);
                     }
                 }catch (InterruptedException | SQLException e) {

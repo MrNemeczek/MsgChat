@@ -220,32 +220,6 @@ public class DataBaseOperation {
         return true;
     }
 
-//    public static LinkedList<Message> GetMessages(User currentUser, Friend friend, Connection connection) throws SQLException{
-//        String query = "SELECT * FROM message \n" +
-//                "WHERE (id_user_sender=" + currentUser.ID_User + " AND id_user_receiver=" + friend.User_Friend.ID_User + ") OR (id_user_sender=" + friend.User_Friend.ID_User + " AND id_user_receiver=" + currentUser.ID_User + ")\n" +
-//                "ORDER BY id_message DESC LIMIT 11;";
-//
-//        LinkedList<Message> messages = new LinkedList<>();
-//
-//        PreparedStatement ps = connection.prepareStatement(query);
-//        ResultSet rs = ps.executeQuery();
-//
-//        while(rs.next()){
-//
-//            Message message = new Message();
-//
-//            message.ID_Message = rs.getInt("id_message");
-//            message.ID_User_Sender = rs.getInt("id_user_sender");
-//            message.Content = rs.getString("content");
-//            message.Timestamp = rs.getTimestamp("ts");
-//
-//            messages.add(message);
-//
-//        }
-//
-//        return messages;
-//    }
-
     public static LinkedList<Message> GetOldMessages(User currentUser, Friend friend, int lastIDMsg ,Connection connection) throws SQLException {
         String queryGetNext10Msgs = "SELECT * FROM message \n" +
                 "WHERE ((id_user_sender=" + currentUser.ID_User + " AND id_user_receiver=" + friend.User_Friend.ID_User + ") OR (id_user_sender=" + friend.User_Friend.ID_User + " AND id_user_receiver=" + currentUser.ID_User + ")) AND id_message < " + lastIDMsg + "\n" +
