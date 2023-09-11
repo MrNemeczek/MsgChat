@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.LinkedList;
 
 public class GetMessagesThread extends Thread implements IThread {
     private MessagesForm _form;
@@ -25,7 +26,19 @@ public class GetMessagesThread extends Thread implements IThread {
         try {
             do {
                 int lastIDMsg = Message.LastIndex(_form.messages);
-                _form.messages = DataBaseOperation.GetOldMessages(_form._currentUser, _friend, lastIDMsg, _form._conn);
+                if(_form.messages != null){
+                    LinkedList<Message> tempMsgs = DataBaseOperation.GetOldMessages(_form._currentUser, _friend, lastIDMsg, _form._conn);
+                    Collections.reverse(tempMsgs);
+                    _form.messages.addAll(0, tempMsgs);
+
+                    if(tempMsgs == null || tempMsgs.size() == 0){
+                        break;
+                    }
+                }else{
+                    _form.messages = DataBaseOperation.GetOldMessages(_form._currentUser, _friend, lastIDMsg, _form._conn);
+                    Collections.reverse(_form.messages);
+                }
+
                 _form.ID_texting_friend = _friend.User_Friend.ID_User;
 
                 if(_form.messages == null || _form.messages.size() == 0){
@@ -36,7 +49,7 @@ public class GetMessagesThread extends Thread implements IThread {
                 _form.MessagePanel.removeAll();
                 _form.MessagePanel.revalidate();
                 _form.MessagePanel.repaint();
-                Collections.reverse(_form.messages);
+
                 for (var msg : _form.messages) {
 
                     JLabel msgLabel = new JLabel(msg.Content);
