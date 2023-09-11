@@ -5,12 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" name="Changes" comment="better frontend">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Interfaces/IDataBaseOperation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/mj/Interfaces/IThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Database/DataBaseOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/MQTTClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/MQTTRegistryClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/FindUsersThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/FindUsersThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetOldMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetOldMessagesThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/LoginThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/LoginThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/RegisterThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/RegisterThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/SendMessageThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/SendMessageThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/LoginForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/MessagesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/RegisterForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Views/SearchUserForm.java" afterDir="false" />
     </list>
-    <list id="c9571aa0-ebca-4048-a168-e38d347c46f4" name="Changes by jerem" comment="" />
+    <list id="3c2acc2c-39b6-4c38-baec-7d4b1e837715" name="Changes by jerem" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Functions/MQTTRegistryClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/MQTTRegistryClientThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java" afterDir="false" />
+    </list>
     <list id="b2da128c-f435-4b7e-9c51-3a7273734cbd" name="Changes by micha" comment="Changes by micha" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +37,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -40,6 +57,25 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/org/mj/Threads/MQTTRegistryClientThread.java">
+      <ranges>
+        <range start1="0" end1="1" start2="0" end2="1" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="7" end1="7" start2="7" end2="8" changelist="3c2acc2c-39b6-4c38-baec-7d4b1e837715" />
+        <range start1="9" end1="10" start2="10" end2="11" changelist="3c2acc2c-39b6-4c38-baec-7d4b1e837715" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/main/java/org/mj/Threads/GetMessagesThread.java">
+      <ranges>
+        <range start1="4" end1="4" start2="4" end2="5" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="7" end1="8" start2="8" end2="8" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="12" end1="12" start2="12" end2="14" changelist="3c2acc2c-39b6-4c38-baec-7d4b1e837715" />
+        <range start1="13" end1="14" start2="15" end2="16" changelist="51a1721b-8523-4fb7-b8d8-f851fd4a3d56" />
+        <range start1="27" end1="28" start2="29" end2="37" changelist="3c2acc2c-39b6-4c38-baec-7d4b1e837715" />
+        <range start1="37" end1="38" start2="46" end2="47" changelist="3c2acc2c-39b6-4c38-baec-7d4b1e837715" />
+      </ranges>
+    </file>
+  </component>
   <component name="ProjectId" id="2QtDrBMQL8aNYr2xy3qNYdSfD0q" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -56,7 +92,7 @@
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/jerem/IdeaProjects/MsgChat&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/micha/Desktop/TicTacToe&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -67,13 +103,26 @@
       <recent name="org.mj.Models" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoginForm">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="LoginForm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.mj.Views.LoginForm" />
       <module name="MsgChat" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.mj.Models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.mj.Main" />
+      <module name="MsgChat" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.mj.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -122,6 +171,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.LoginForm" />
         <item itemvalue="Application.MessagesForm" />
         <item itemvalue="Application.SearchUserForm" />

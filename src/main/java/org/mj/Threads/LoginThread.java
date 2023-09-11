@@ -1,15 +1,15 @@
 package org.mj.Threads;
 
 import org.mj.Database.DataBaseOperation;
+import org.mj.Interfaces.IThread;
 import org.mj.Models.User;
 import org.mj.Views.LoginForm;
 import org.mj.Views.MessagesForm;
-
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class LoginThread extends Thread{
+public class LoginThread extends Thread implements IThread {
     private LoginForm _form;
     private String _login;
     private String _password;

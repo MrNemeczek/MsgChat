@@ -1,17 +1,17 @@
-package org.mj.Functions;
+package org.mj.Threads;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import org.mj.Models.Message;
+import org.mj.Interfaces.IThread;
 import org.mj.Models.User;
 
-public class MQTTClientThread extends Thread{
-    private String _content;
-    private int _IDTextingFriend;
-    private User _currentUser;
+public class MQTTClientThread extends Thread implements IThread {
+    private final String _content;
+    private final int _IDTextingFriend;
+    private final User _currentUser;
 
     public MQTTClientThread(String content, User currentUser, int IDTextingFriend){
         _content = content;

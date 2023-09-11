@@ -2,6 +2,7 @@ package org.mj.Threads;
 
 import org.mj.Database.DataBaseOperation;
 import org.mj.Functions.MyUI;
+import org.mj.Interfaces.IThread;
 import org.mj.Models.User;
 import org.mj.Views.SearchUserForm;
 
@@ -13,7 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-public class FindUsersThread extends Thread{
+public class FindUsersThread extends Thread implements IThread {
     private SearchUserForm _form;
     private String _searchText;
     public FindUsersThread(SearchUserForm form, String searchText){

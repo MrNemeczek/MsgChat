@@ -1,4 +1,4 @@
-package org.mj.Functions;
+package org.mj.Threads;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;

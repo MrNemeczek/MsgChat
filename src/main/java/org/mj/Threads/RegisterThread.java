@@ -1,15 +1,14 @@
 package org.mj.Threads;
 
 import org.mj.Database.DataBaseOperation;
-import org.mj.Functions.MQTTRegistryClientThread;
+import org.mj.Interfaces.IThread;
 import org.mj.Models.User;
 import org.mj.Views.LoginForm;
-
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class RegisterThread extends Thread{
+public class RegisterThread extends Thread implements IThread {
     private User _user;
     private JFrame _form;
 
@@ -19,7 +18,7 @@ public class RegisterThread extends Thread{
     }
     public void run(){
         Connection conn = DataBaseOperation.ConnectToDB();
-        //TODO: sprobowac przeniesc try catcha do DataBaseOperation
+
         try {
             if(DataBaseOperation.Registry(_user, conn)){
                 MQTTRegistryClientThread registryClientThread = new MQTTRegistryClientThread(_user);

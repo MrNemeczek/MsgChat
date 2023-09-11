@@ -3,13 +3,13 @@ package org.mj.Database;
 import java.sql.*;
 import java.util.LinkedList;
 
+import org.mj.Interfaces.IDataBaseOperation;
 import org.mj.Models.*;
 
-public class DataBaseOperation {
-    /**
-     * laczenie sie z baza danych
-     * @return Connection jesli nie udalo sie polaczyc zwraca null
-     */
+public class DataBaseOperation implements IDataBaseOperation {
+
+    /** laczenie sie z baza danych
+     * @return conn jesli nie udalo sie polaczyc zwraca null*/
     public static Connection ConnectToDB(){
         String connectionUrl = "jdbc:mysql://mqttdb.mysql.database.azure.com:3306/chatdb";
 
@@ -23,14 +23,12 @@ public class DataBaseOperation {
         }
     }
 
-    /**
-     * logowanie do aplikacji
+    /** logowanie do aplikacji, weryfikacja danych uzytkownika w DB (tablica user)
      * @param login
      * @param password
      * @param connection
      * @return 0 - jesli logowanie jest niepoprawne (kazda inna liczba oznacza udane logowanie)
-     * @throws SQLException
-     */
+     * @throws SQLException*/
     public static User Login(String login, String password, Connection connection) throws SQLException {
         String query = "SELECT * FROM user WHERE login=\"" + login + "\" AND password=\"" + password + "\"";
 
@@ -45,49 +43,36 @@ public class DataBaseOperation {
             user.Name = rs.getString("name");
             user.Lastname = rs.getString("lastname");
             user.ID_User = rs.getInt("id_user");
-
             return user;
         }
         return null;
     }
 
-    /**
-     * rejestracja do aplikacji
+    /** rejestracja do aplikacji, zapis uzytkownika do DB (tablica user)
      * @param user
      * @param connection
-     * @return true - udana rejestracja false - nieudana rejestracja
-     * @throws SQLException
-     */
+     * @return true - udana rejestracja, false - nieudana rejestracja
+     * @throws SQLException*/
     public static boolean Registry(User user, Connection connection) throws SQLException {
         String checkLoginExists = "SELECT login FROM user WHERE login='" + user.Login + "';";
         String query = "INSERT INTO user (`login`, `password`, `name`, `lastname`) VALUES ('" + user.Login + "', '" + user.Password + "', '" + user.Name + "', '" + user.Lastname + "');";
 
-        //PreparedStatement ps = connection.prepareStatement(query);
         PreparedStatement ps = connection.prepareStatement(checkLoginExists);
         ResultSet rs = ps.executeQuery();
 
         if(!rs.next()) {
             ps = connection.prepareStatement(query);
             ps.executeUpdate(query);
-
-            System.out.println("nie ma takiego loginu");
-
             return true;
         }
-        else{
-            System.out.println("jest juz taki login");
-
-            return false;
-        }
+        else{return false;}
     }
 
-    /**
-     * wyszukuje z DB jakich mamy znajomych
+    /** wyszukuje z DB jakich mamy znajomych (tablica friend)
      * @param user uzytkownik dla ktorego szukamy friendow
      * @param connection
      * @return LinkedList<Friend> firendy z user
-     * @throws SQLException
-     */
+     * @throws SQLException*/
     public static LinkedList<Friend> GetFriends(User user, Connection connection) throws SQLException {
         String query = "SELECT f.*, " +
                 "CASE WHEN f.id_user=" + user.ID_User + " THEN u_friend.name ELSE u.name END as name, " +
@@ -120,6 +105,11 @@ public class DataBaseOperation {
         return friends;
     }
 
+    /** wyszukuje z DB zaproszenia do znajomych (tablica freiend)
+     * @param user uzytkownik dla ktorego wyszukiwane są zaproszenia
+     * @param connection
+     * @return LinkedList<Friend> lista zaproszeń dla user
+     * @throws SQLException*/
     public static LinkedList<Friend> CheckFriendRequests (User user, Connection connection) throws SQLException {
 
         LinkedList<Friend> friendsRequested = new LinkedList<>();
@@ -146,23 +136,21 @@ public class DataBaseOperation {
         return friendsRequested;
     }
 
-    /**
-     * szuka uzytkownik po imieniu i nazwisku
+    /** szuka uzytkownik po imieniu i nazwisku w DB (tablica user)
      * @param searchString - string imie lub nazwisko zeby znalezc osobe
      * @param connection
-     * @return LinkedList<User> uzytkownicy ktorzy pasuje do frazy szukajacej
-     * @throws Exception
-     */
+     * @return LinkedList<User> uzytkownicy ktorzy pasuja do frazy szukajacej
+     * @throws Exception*/
     public static LinkedList<User> FindUser(String searchString, Connection connection) throws Exception{
         String[] splittedText = searchString.split(" ");
         String query;
         if(splittedText.length == 1){
             query = "SELECT id_user, name, lastname FROM user WHERE name LIKE '%" + splittedText[0] + "%' OR lastname LIKE '%" + splittedText[0] + "%';";
-        } else if (splittedText.length == 2) {
-            query = "SELECT id_user, name, lastname FROM user WHERE name LIKE '%" + splittedText[0] + "%' OR lastname LIKE '%" + splittedText[1] + "%';";
-        } else{
-          return null;
         }
+        else if (splittedText.length == 2) {
+            query = "SELECT id_user, name, lastname FROM user WHERE name LIKE '%" + splittedText[0] + "%' OR lastname LIKE '%" + splittedText[1] + "%';";
+        }
+        else{return null;}
 
         LinkedList<User> users = new LinkedList<>();
         PreparedStatement ps = connection.prepareStatement(query);
@@ -177,11 +165,15 @@ public class DataBaseOperation {
             userfound.ID_User = rs.getInt("id_user");
             users.add(userfound);
             System.out.println(userfound.ID_User);
-            
         }
         return users;
     }
 
+    /** umieszcza rekord zaproszenia w bazie danych (tablica friend)
+     * @param user - uzytkownik, ktory zaprasza
+     * @param frienduser - uzytkownik zapraszany
+     * @param connection
+     * @throws Exception*/
     public static boolean FriendRequest (User user, User frienduser, Connection connection) throws SQLException {
         String query = "INSERT INTO friend (`id_user`, `id_user_friend`) VALUES ( " + user.ID_User + ", " + frienduser.ID_User + ")";
 
@@ -191,10 +183,11 @@ public class DataBaseOperation {
         return true;
     }
 
-    /**
-     * Sprawdza czy juz mamy takiego znajomego
-     * @return
-     */
+    /** sprawdza czy juz mamy takiego znajomego w DB (tablica user)
+     * @param user - uzytkownik, dla którego sprawdzany jest friend
+     * @param friend - uzytkownik sprawdzany
+     * @param connection
+     * @throws Exception*/
     public static boolean CheckFriend(User friend, User user, Connection connection) throws SQLException {
         String query = "SELECT f.id_friend FROM friend f\n" +
                 "join user u ON u.id_user=f.id_user \n" +
@@ -204,13 +197,15 @@ public class DataBaseOperation {
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        if(!rs.next()){
-            return false;
-        }else{
-            return true;
-        }
+        if(!rs.next()){return false;}
+
+        else{return true;}
     }
 
+    /** zmienia atrybut "accepted" rekordu zaproszenia na 1 oznaczajacy zaakceptowane
+     * @param friend - id rekordu zaproszenia
+     * @param connection
+     * @throws Exception*/
     public static boolean AcceptFriendRequest(Friend friend, Connection connection) throws SQLException{
         String query = "UPDATE friend SET `accepted` = '1' WHERE (`id_friend`=" + friend.ID_Friend + ");";
 
@@ -220,11 +215,16 @@ public class DataBaseOperation {
         return true;
     }
 
+    /** zwraca z DB maksymalnie 11 ostatnich wiadomosci pomiedzy uzytkownikiem a wybranym z listy znajomym (tablica message)
+     * @param currentUser - uzytkownik
+     * @param friend - uzytkownik, ktorego okno otwarto (atrybut id zwrocony z DB tablica friend poprzez funkcje GetFriends DB operation)
+     * @param lastIDMsg - id ostatniej zwroconej wiadomosci
+     * @param connection
+     * @throws Exception*/
     public static LinkedList<Message> GetOldMessages(User currentUser, Friend friend, int lastIDMsg ,Connection connection) throws SQLException {
         String queryGetNext10Msgs = "SELECT * FROM message \n" +
                 "WHERE ((id_user_sender=" + currentUser.ID_User + " AND id_user_receiver=" + friend.User_Friend.ID_User + ") OR (id_user_sender=" + friend.User_Friend.ID_User + " AND id_user_receiver=" + currentUser.ID_User + ")) AND id_message < " + lastIDMsg + "\n" +
                 "ORDER BY id_message DESC LIMIT 11;";
-        System.out.println(lastIDMsg);
 
         LinkedList<Message> messages = new LinkedList<>();
 
@@ -241,12 +241,17 @@ public class DataBaseOperation {
             message.Timestamp = rs.getTimestamp("ts");
 
             messages.add(message);
-            System.out.println(message.ID_Message + " " + message.Content);
         }
 
         return messages;
     }
 
+    /** umieszcza w bazie dannych rekord wiadomosci(tablica message)
+     * @param currentUser - uzytkownik wysylajacy wiadomosc
+     * @param ID_friend  - id uzytownika docelowego
+     * @param msg - tresc widomosci
+     * @param connection
+     * @throws Exception*/
     public static boolean SendMessage(User currentUser, int ID_friend, String msg, Connection connection) throws SQLException{
         String query = "INSERT INTO message (`id_user_sender`, `id_user_receiver`, `content`) " +
                 "VALUES ('" + currentUser.ID_User + "', '" + ID_friend + "', '" + msg + "');";

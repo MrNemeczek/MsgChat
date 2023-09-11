@@ -1,12 +1,13 @@
 package org.mj.Threads;
 
 import org.mj.Database.DataBaseOperation;
+import org.mj.Interfaces.IThread;
 import org.mj.Models.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class SendMessageThread extends Thread{
+public class SendMessageThread extends Thread implements IThread {
     private User _currentUser;
     private int _ID_texting_friend;
     private String _content;

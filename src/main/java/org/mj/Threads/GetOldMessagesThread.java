@@ -2,19 +2,18 @@ package org.mj.Threads;
 
 import org.mj.Database.DataBaseOperation;
 import org.mj.Functions.MyUI;
-import org.mj.Models.Friend;
+import org.mj.Interfaces.IThread;
 import org.mj.Models.Message;
 import org.mj.Views.MessagesForm;
-
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-public class GetOldMessages extends Thread{
+public class GetOldMessagesThread extends Thread implements IThread {
     private MessagesForm _form;
 
-    public GetOldMessages(MessagesForm form){
+    public GetOldMessagesThread(MessagesForm form){
         _form = form;
     }
 

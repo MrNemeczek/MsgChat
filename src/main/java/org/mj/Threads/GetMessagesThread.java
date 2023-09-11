@@ -2,16 +2,16 @@ package org.mj.Threads;
 
 import org.mj.Database.DataBaseOperation;
 import org.mj.Functions.MyUI;
+import org.mj.Interfaces.IThread;
 import org.mj.Models.Friend;
 import org.mj.Models.Message;
 import org.mj.Views.MessagesForm;
-
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.Collections;
 
-public class GetMessagesThread extends Thread{
+public class GetMessagesThread extends Thread implements IThread {
     private MessagesForm _form;
     private Friend _friend;
     public GetMessagesThread(MessagesForm form, Friend friend){

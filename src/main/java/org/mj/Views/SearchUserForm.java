@@ -1,7 +1,5 @@
 package org.mj.Views;
 
-import org.mj.Database.DataBaseOperation;
-import org.mj.Functions.MyUI;
 import org.mj.Models.User;
 import org.mj.Threads.FindUsersThread;
 
@@ -9,9 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.LinkedList;
+
 
 public class SearchUserForm extends JFrame implements ActionListener{
     private JTextField SearchField;
@@ -37,16 +33,15 @@ public class SearchUserForm extends JFrame implements ActionListener{
                findUsersThread.start();
            }
        });
-
-}
+    }
     private void createUIComponents() {
         UsersPanel = new JPanel();
         //UsersPanel.setLayout(new GridLayout(0,1));
         UsersPanel.setLayout(new BoxLayout(UsersPanel, BoxLayout.Y_AXIS));
-    }
+        }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-    }
+        }
 }

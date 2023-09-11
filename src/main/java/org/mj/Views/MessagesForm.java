@@ -6,24 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
-import java.awt.geom.RoundRectangle2D;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.*;
-
-
 import org.eclipse.paho.client.mqttv3.*;
-//import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-//import org.eclipse.paho.client.mqttv3.MqttException;
-//import org.eclipse.paho.client.mqttv3.MqttMessage;
-//import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.mj.Database.*;
 import org.mj.Models.*;
 import org.mj.Functions.*;
 import org.mj.Threads.GetMessagesThread;
-import org.mj.Threads.GetOldMessages;
+import org.mj.Threads.GetOldMessagesThread;
+import org.mj.Threads.MQTTClientThread;
 import org.mj.Threads.SendMessageThread;
 
 public class MessagesForm extends JFrame implements ActionListener{
@@ -33,13 +26,13 @@ public class MessagesForm extends JFrame implements ActionListener{
     private JButton SendButton;
     private JScrollPane MessagesScrollPanel;
     private JPanel FriendsPanel;
-    private JScrollPane FriendsScrollPanel;
-    private JScrollPane RequestsScrollPanel;
     private JPanel RequestsPanel;
     public JPanel MessagePanel;
     private JButton LogoutButton;
     private JLabel UserLabel;
     private JLabel ConversationLbl;
+    private JScrollPane RequestsScrollPanel;
+    private JScrollPane FriendsScrollPanel;
     public JScrollBar ScrollBarMessage;
 
     public int ID_texting_friend;
@@ -55,6 +48,7 @@ public class MessagesForm extends JFrame implements ActionListener{
     public boolean allMsgsDownloaded = false;
 
     public  MessagesForm(JFrame parent, User currentUser, Connection conn) throws SQLException {
+
         _currentUser = currentUser;
         _conn = conn;
 
@@ -64,6 +58,7 @@ public class MessagesForm extends JFrame implements ActionListener{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+        getRootPane().setDefaultButton(SendButton);
         _form = this;
 
         UserLabel.setText(currentUser.Name + " " + currentUser.Lastname);
@@ -76,12 +71,12 @@ public class MessagesForm extends JFrame implements ActionListener{
             @Override
             public void adjustmentValueChanged(AdjustmentEvent e) {
                 JScrollBar scrollBar = (JScrollBar) e.getSource();
-//tu pobieranie kolejnych wiadomosci przy dojechaniu do gory scrollem
+                //pobieranie kolejnych wiadomosci przy dojechaniu do gory scrollem
                 if (scrollBar.getValue() == scrollBar.getMinimum() && msgsLoaded && !allMsgsDownloaded) {
                     scrollBar.setValue(scrollBar.getMinimum() + 20);
 
-                    GetOldMessages getOldMessages = new GetOldMessages(_form);
-                    getOldMessages.start();
+                    GetOldMessagesThread getOldMessagesThread = new GetOldMessagesThread(_form);
+                    getOldMessagesThread.start();
                 }
             }
         });
@@ -103,6 +98,7 @@ public class MessagesForm extends JFrame implements ActionListener{
             }
         });
 
+
         LogoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -116,8 +112,8 @@ public class MessagesForm extends JFrame implements ActionListener{
     private void setFriendsPanel() throws SQLException{
         FriendsPanel.removeAll();
         LinkedList<Friend> friends = DataBaseOperation.GetFriends(_currentUser, _conn);
-        for(var friend : friends){
 
+        for(var friend : friends){
             JButton friendButton = MyUI.FlexButton(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
             FriendsPanel.add(friendButton);
             FriendsPanel.revalidate();
@@ -129,25 +125,19 @@ public class MessagesForm extends JFrame implements ActionListener{
                     _conversationFriend = friend;
                     ConversationLbl.setText(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
 
-                    //usuwanie rzeczy
-                    MessagePanel.removeAll();
+               /*     MessagePanel.removeAll();
                     MessagePanel.revalidate();
                     MessagePanel.repaint();
-
-                    if(messages != null){
-                        messages.clear();
-                    }
+*/
+                    if(messages != null){messages.clear();}
 
                     allMsgsDownloaded = false;
-                    //###########################
-
                     GetMessagesThread getMessagesThread = new GetMessagesThread(_form, friend);
                     getMessagesThread.start();
                 }
             });
-
         }
-        System.out.println("Zapytano o znajomych");
+
 
     }
     private void setRequestsPanel() throws SQLException {
@@ -188,9 +178,7 @@ public class MessagesForm extends JFrame implements ActionListener{
                             });
 
                         }
-                        System.out.println("Zapytano o zaproszenia");
-                        //setFriendsPanel();
-                        //TODO: zwiekszyc czas
+
                         Thread.sleep(5000);
                     }
                 }catch (InterruptedException | SQLException e) {
@@ -208,6 +196,7 @@ public class MessagesForm extends JFrame implements ActionListener{
         sendMessageThread.start();
 
         JLabel msgLabel = new JLabel(content);
+        msgLabel.setFont(new Font("Arial", Font.PLAIN, 60));
         MessagePanel.add(MyUI.placeRight(msgLabel));
         MessagePanel.revalidate();
         MessagePanel.repaint();
@@ -230,8 +219,6 @@ public class MessagesForm extends JFrame implements ActionListener{
                 String clientid = String.valueOf(_currentUser.ID_User);
                 int qos = 0;
 
-                //System.out.println("nasluchiwanie wlaczone dla: " + topic);
-
                 try {
                     MqttClient client = new MqttClient(broker, clientid, new MemoryPersistence());
 
@@ -240,28 +227,22 @@ public class MessagesForm extends JFrame implements ActionListener{
                     options.setPassword(password.toCharArray());
                     options.setConnectionTimeout(60);
                     options.setKeepAliveInterval(60);
-
-                    //TODO: skrocic to kurestwo
                     client.setCallback(new MqttCallback() {
-
                         public void connectionLost(Throwable cause) {
                             System.out.println("connectionLost: " + cause.getMessage());
                         }
-
                         public void messageArrived(String topic, MqttMessage message) {
                             System.out.println("message content: " + new String(message.getPayload()));
                             JLabel msgLabel = new JLabel(new String(message.getPayload()));
-                            //msgLabel.setFont(new Font("Arial", Font.PLAIN, 40));
 
+                            msgLabel.setFont(new Font("Arial", Font.PLAIN, 60));
                             MessagePanel.add(MyUI.placeLeft(msgLabel));
                             MessagePanel.revalidate();
                             MessagePanel.repaint();
                         }
-
                         public void deliveryComplete(IMqttDeliveryToken token) {
                             System.out.println("deliveryComplete---------" + token.isComplete());
                         }
-
                     });
 
                     client.connect(options);

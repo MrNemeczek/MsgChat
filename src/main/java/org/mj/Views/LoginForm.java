@@ -44,7 +44,7 @@ public class LoginForm extends JFrame{
         });
     }
 
-    public static void main (String[] args){
+    /*public static void main (String[] args){
         LoginForm loginForm = new LoginForm(null);
-    }
+    }*/
 }

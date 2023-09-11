@@ -4,12 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.SQLException;
 
-import org.mj.Functions.MQTTRegistryClientThread;
 import org.mj.Models.*;
-import org.mj.Database.*;
 import org.mj.Threads.RegisterThread;
 
 public class RegisterForm extends JFrame{
@@ -51,7 +47,7 @@ public class RegisterForm extends JFrame{
             }
         });
     }
-    public static void main(String[] args){
+   /* public static void main(String[] args){
         RegisterForm registerForm = new RegisterForm(null);
-    }
+    }*/
 }
