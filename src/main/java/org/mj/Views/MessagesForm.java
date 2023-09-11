@@ -125,10 +125,6 @@ public class MessagesForm extends JFrame implements ActionListener{
                     _conversationFriend = friend;
                     ConversationLbl.setText(friend.User_Friend.Name + " " + friend.User_Friend.Lastname);
 
-               /*     MessagePanel.removeAll();
-                    MessagePanel.revalidate();
-                    MessagePanel.repaint();
-*/
                     if(messages != null){messages.clear();}
 
                     allMsgsDownloaded = false;
@@ -214,7 +210,7 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                 String broker = "tcp://40.115.61.160:1883";
                 String topic = "mqtt/"+_currentUser.ID_User+"/"+IDTextingFriend;
-                String username = _currentUser.Name;
+                String username = _currentUser.Login;
                 String password = _currentUser.Password;
                 String clientid = String.valueOf(_currentUser.ID_User);
                 int qos = 0;

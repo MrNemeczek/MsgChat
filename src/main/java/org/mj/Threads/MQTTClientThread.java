@@ -22,9 +22,9 @@ public class MQTTClientThread extends Thread implements IThread {
     public void run() {
         String broker = "tcp://40.115.61.160:1883";
         String topic = "mqtt/"+_IDTextingFriend+"/"+_currentUser.ID_User;
-        String username = _currentUser.Name;
+        String username = _currentUser.Login;
         String password = _currentUser.Password;
-        String clientid = String.valueOf(_currentUser.ID_User);
+        String clientid = String.valueOf(_currentUser.Name);
 
         int qos = 0;
 
