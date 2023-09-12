@@ -42,9 +42,7 @@ public class MQTTClientThread extends Thread implements IThread {
             message.setQos(qos);
 
             client.publish(topic, message);
-            System.out.println("Message published");
-            System.out.println("topic: " + topic);
-            System.out.println("message content: " + _content);
+
 
             // disconnect
             client.disconnect();

@@ -44,7 +44,7 @@ public class GetMessagesThread extends Thread implements IThread {
                 if(_form.messages == null || _form.messages.size() == 0){
                     break;
                 }
-                System.out.println("test");
+
 
                 _form.MessagePanel.removeAll();
                 _form.MessagePanel.revalidate();

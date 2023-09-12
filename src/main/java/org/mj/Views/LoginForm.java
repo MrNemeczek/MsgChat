@@ -21,6 +21,7 @@ public class LoginForm extends JFrame{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+        getRootPane().setDefaultButton(LoginButton);
         LoginForm form = this;
 
         LoginButton.addActionListener(new ActionListener() {
