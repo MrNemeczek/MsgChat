@@ -9,11 +9,12 @@ import org.mj.Models.*;
 import org.mj.Threads.RegisterThread;
 
 public class RegisterForm extends JFrame{
+    public JButton RegistryButton;
     private JTextField NameField;
     private JTextField LastnameField;
     private JTextField LoginField;
     private JPasswordField PasswordField;
-    private JButton RegistryButton;
+
     private JPanel MainPanel;
     private JButton LoginButton;
 
@@ -24,7 +25,7 @@ public class RegisterForm extends JFrame{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-        JFrame form = this;
+        RegisterForm form = this;
         RegistryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,6 +35,8 @@ public class RegisterForm extends JFrame{
                 user.Password = String.valueOf(PasswordField.getPassword());
                 user.Name = NameField.getText();
                 user.Lastname = LastnameField.getText();
+
+                RegistryButton.setEnabled(false);
 
                 RegisterThread registerThread = new RegisterThread(form, user);
                 registerThread.start();
@@ -47,7 +50,4 @@ public class RegisterForm extends JFrame{
             }
         });
     }
-   /* public static void main(String[] args){
-        RegisterForm registerForm = new RegisterForm(null);
-    }*/
 }

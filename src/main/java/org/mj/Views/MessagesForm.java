@@ -127,6 +127,10 @@ public class MessagesForm extends JFrame implements ActionListener{
 
                     if(messages != null){messages.clear();}
 
+                    _form.MessagePanel.removeAll();
+                    _form.MessagePanel.revalidate();
+                    _form.MessagePanel.repaint();
+
                     allMsgsDownloaded = false;
                     GetMessagesThread getMessagesThread = new GetMessagesThread(_form, friend);
                     getMessagesThread.start();
@@ -240,8 +244,9 @@ public class MessagesForm extends JFrame implements ActionListener{
                             System.out.println("deliveryComplete---------" + token.isComplete());
                         }
                     });
-
-                    client.connect(options);
+                    if(!client.isConnected()) {
+                        client.connect(options);
+                    }
                     client.subscribe(topic, qos);
                 } catch (MqttException e) {
                     throw new RuntimeException(e);
