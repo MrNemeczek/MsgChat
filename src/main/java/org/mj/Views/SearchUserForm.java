@@ -23,6 +23,7 @@ public class SearchUserForm extends JFrame implements ActionListener{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+        getRootPane().setDefaultButton(SearchButton);
         SearchUserForm form = this;
         currentUser = currentuser;
 
